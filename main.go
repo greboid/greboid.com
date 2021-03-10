@@ -15,6 +15,7 @@ import (
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/kouhin/envflag"
 )
 
 //go:embed static
@@ -25,6 +26,10 @@ var templates = template.Must(template.ParseFS(staticfs, "static/css/main.css"))
 var backwards = flag.Bool("backwards", false, "Should we show the page backwards")
 
 func main() {
+	err := envflag.Parse()
+	if err != nil {
+		log.Fatalf("Unable to parse flags: %s", err.Error())
+	}
 	staticFiles, err := fs.Sub(staticfs, "static")
 	if err != nil {
 		log.Fatalf("Error: %s", err)

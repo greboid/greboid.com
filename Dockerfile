@@ -1,32 +1,29 @@
-FROM debian:stretch as prepare
-RUN DEBIAN_FRONTEND=noninteractive apt-get update 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends ca-certificates gnupg2 curl apt-transport-https
-RUN echo "deb https://deb.nodesource.com/node_14.x stretch main" | tee /etc/apt/sources.list.d/nodesource.list
-RUN curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
-RUN DEBIAN_FRONTEND=noninteractive apt-get update 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends tidy webp bash nodejs jpegoptim optipng
-RUN rm -rf /var/lib/apt/lists/*
-RUN npm i -g @josee9988/minifyall
-
-WORKDIR /site
-
-COPY favicon.ico /site
-COPY index.html /site
-COPY assets/ /site/assets/
-RUN chown -R nobody:nogroup /site
-USER nobody:nogroup
-
-RUN minifyall  -d /site
-RUN mv "/site/assets/css/main.css" "/site/assets/css/main-$(sha256sum /site/assets/css/main.css | cut -c -10).css"
-RUN sed -i "s#\"assets/css/main.css\"#\"assets/css/$(find /site/assets/css/ -maxdepth 1 -type f -name main-*.css | awk -F/ '{print $NF}')\"#g" /site/index.html
-RUN for file in $(find /site -name '*.jpg' -o -name '*.png' -o -name '*.jpeg'); do cwebp -quiet -m 6 -mt -o "$file.webp" -- "$file"; done
-RUN jpegoptim -q /site/assets/images/*.jpg
-RUN optipng -quiet /site/assets/images/*.png
+FROM registry.greboid.com/mirror/debian:latest as webp
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends webp python && \
+    rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY static/ /app/static/
+COPY minify.sh /app
+RUN /bin/bash /app/minify.sh
 
 FROM registry.greboid.com/cv:latest as cv
 
-FROM nginx:mainline-alpine AS nginx
+FROM registry.greboid.com/mirror/golang:latest as builder
+WORKDIR /app
+COPY --from=cv /srv/http/cv.pdf /app/static/cv.pdf
+COPY --from=webp /app/static/ /app/static/
+COPY main.go /app
+COPY handlers.go /app
+COPY go.mod /app
+COPY go.sum /app
+RUN ls /app
+RUN ls /app/static
+RUN ls /app/static/images
+RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' -o main .
 
-COPY --from=prepare /site /usr/share/nginx/html
-COPY --from=cv /srv/http/cv.pdf /usr/share/nginx/html
-ADD nginx.conf /etc/nginx/nginx.conf
+FROM scratch
+WORKDIR /app
+COPY --from=builder /app/main /app
+EXPOSE 8080
+CMD ["/app/main"]

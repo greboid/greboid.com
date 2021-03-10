@@ -13,19 +13,6 @@
     --overlay: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.5), transparent);
   }
 }
-
-@font-face {
-  font-family: 'Khula';
-  font-weight: 400;
-  font-display: fallback;
-  src: local('Khula'), url("/fonts/khula-regular.otf") format('opentype'), url("/fonts/khula-regular.ttf") format('truetype');
-}
-@font-face {
-  font-family: 'Khula';
-  font-weight: 800;
-  font-display: fallback;
-  src: local('Khula'), url("/fonts/khula-extrabold.otf") format('opentype'), url("/fonts/khula-extrabold.ttf") format('truetype');
-}
 a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
   margin: 0;
   padding: 0;
@@ -57,7 +44,7 @@ table {
 }
 body, input, select, textarea {
   color: var(--foreground-colour);
-  font-family: 'Khula', sans-serif;
+  font-family: sans-serif;
   font-size: 15pt;
   font-weight: 300 !important;
   letter-spacing: -0.025em;
@@ -86,6 +73,8 @@ a {
   }
 }
 #wrapper {
+  background: var(--background);
+  background-size: cover;
   animation: wrapper 0.5s forwards;
   height: 100%;
   left: 0;
@@ -102,8 +91,6 @@ body {
   min-height: 100%;
 }
 body {
-  background: var(--background);
-  background-size: cover;
 }
 #overlay {
   height: 100%;

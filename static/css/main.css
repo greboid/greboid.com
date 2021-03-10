@@ -9,7 +9,7 @@
   :root {
     --background-colour: #000;
     --foreground-colour: #fff;
-    --background: #000 url("/images/black-bacon.png") no-repeat fixed center center;
+    --background: #000 url("/images/black-bacon.jpg") no-repeat fixed center center;
     --overlay: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.5), transparent);
   }
 }

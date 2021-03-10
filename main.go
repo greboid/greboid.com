@@ -21,7 +21,7 @@ import (
 //go:embed static
 var staticfs embed.FS
 
-var templates = template.Must(template.ParseFS(staticfs, "static/css/main.css"))
+var templates = template.Must(template.ParseFS(staticfs, "static/css/main.tmpl"))
 
 var backwards = flag.Bool("backwards", false, "Should we show the page backwards")
 
@@ -63,7 +63,7 @@ func main() {
 
 func serveCSS(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Type", "text/css; charset=utf-8")
-	err := templates.ExecuteTemplate(w, "main.css", *backwards)
+	err := templates.ExecuteTemplate(w, "main.tmpl", *backwards)
 	if err != nil {
 		log.Printf("Error rendering css template: %s", err)
 	}

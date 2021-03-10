@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"embed"
+	"flag"
+	"html/template"
 	"io/fs"
 	"log"
 	"net/http"
@@ -18,15 +20,21 @@ import (
 //go:embed static
 var staticfs embed.FS
 
+var templates = template.Must(template.ParseFS(staticfs, "static/css/main.css"))
+
+var backwards = flag.Bool("backwards", false, "Should we show the page backwards")
+
 func main() {
 	staticFiles, err := fs.Sub(staticfs, "static")
 	if err != nil {
 		log.Fatalf("Error: %s", err)
 	}
+
 	router := mux.NewRouter()
 	router.Use(handlers.ProxyHeaders)
 	router.Use(handlers.CompressHandler)
 	router.Use(NewLoggingHandler(os.Stdout))
+	router.HandleFunc("/css/main.css", serveCSS)
 	router.PathPrefix("/").Handler(NotFoundHandler(CheckWebP(http.FileServer(http.FS(staticFiles)), staticFiles), staticFiles))
 
 	log.Print("Starting server.")
@@ -46,6 +54,14 @@ func main() {
 		log.Fatalf("Unable to shutdown: %s", err.Error())
 	}
 	log.Print("Finishing server.")
+}
+
+func serveCSS(w http.ResponseWriter, _ *http.Request) {
+	w.Header().Set("Content-Type", "text/css; charset=utf-8")
+	err := templates.ExecuteTemplate(w, "main.css", *backwards)
+	if err != nil {
+		log.Printf("Error rendering css template: %s", err)
+	}
 }
 
 func CheckWebP(h http.Handler, files fs.FS) http.HandlerFunc {

@@ -17,7 +17,7 @@ COPY main.go /app
 COPY handlers.go /app
 COPY go.mod /app
 COPY go.sum /app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -trimpath -ldflags '-extldflags "-static"' -o main .
 
 FROM scratch
 WORKDIR /app

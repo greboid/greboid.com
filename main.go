@@ -30,11 +30,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("Unable to parse flags: %s", err.Error())
 	}
-	staticFiles, err := fs.Sub(staticfs, "static")
+	staticFiles, err := GetEmbedOrOSFS("static", staticfs)
 	if err != nil {
-		log.Fatalf("Error: %s", err)
+		log.Fatalf("Unable to find web content: %s", err.Error())
 	}
-
 	router := mux.NewRouter()
 	router.Use(handlers.ProxyHeaders)
 	router.Use(handlers.CompressHandler)

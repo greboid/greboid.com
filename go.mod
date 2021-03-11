@@ -1,4 +1,4 @@
-module github.com/greboid/dioberg.co.uk
+module github.com/greboid/greboid.com
 
 go 1.16
 

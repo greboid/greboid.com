@@ -21,6 +21,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -trimpath -ldflags '-extldflags "-stati
 
 FROM scratch
 WORKDIR /app
-COPY --from=builder /app/main /app
+COPY --from=builder /app/main /greboid.com
 EXPOSE 8080
-CMD ["/app/main"]
+CMD ["/greboid.com"]

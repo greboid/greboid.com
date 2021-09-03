@@ -20,6 +20,13 @@ jobs:
           separator: ' '
           fullname: 'false'
 
+      - name: Login
+        uses: redhat-actions/podman-login@v1
+        with:
+          registry: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+
       - name: Build image
         id: build-image-auth
         uses: redhat-actions/buildah-build@v2.6.2

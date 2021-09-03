@@ -7,7 +7,7 @@ COPY static/ /app/static/
 COPY minify.sh /app
 RUN /bin/bash /app/minify.sh
 
-FROM registry.greboid.com/cv:latest as cv
+FROM reg.g5d.dev/cv:latest as cv
 
 FROM registry.greboid.com/mirror/golang:latest as builder
 

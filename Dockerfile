@@ -7,7 +7,7 @@ COPY static/ /app/static/
 COPY minify.sh /app
 RUN /bin/bash /app/minify.sh
 
-FROM reg.g5d.dev/cv:latest as cv
+FROM reg.g5d.dev/cv:1 as cv
 
 FROM registry.greboid.com/mirror/golang:latest as builder
 
@@ -24,7 +24,7 @@ RUN adduser \
     "${USER}"
 
 WORKDIR /app
-COPY --from=cv /srv/http/cv.pdf /app/static/cv.pdf
+COPY --from=cv /cv.pdf /app/static/cv.pdf
 COPY --from=webp /app/static/ /app/static/
 COPY main.go /app
 COPY handlers.go /app

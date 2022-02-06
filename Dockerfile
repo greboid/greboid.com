@@ -1,48 +1,37 @@
-FROM registry.greboid.com/mirror/debian:latest as webp
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends webp python && \
-    rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-COPY static/ /app/static/
-COPY minify.sh /app
-RUN /bin/bash /app/minify.sh
+FROM reg.g5d.dev/alpine:latest AS images
 
-FROM reg.g5d.dev/cv:1 as cv
+COPY . /src
 
-FROM registry.greboid.com/mirror/golang:latest as builder
+RUN set -eux; \
+    apk add libwebp-tools git coreutils bash; \
+    cd /src; \
+    mkdir -p /app/static/images; \
+    cp -r static/images /app/static; \
+    chmod +x minify.sh; \
+    ./minify.sh
 
-ENV USER=appuser
-ENV UID=10001
+FROM ghcr.io/greboid/cv:latest as cv
 
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    "${USER}"
+FROM reg.g5d.dev/golang:latest AS build
 
-WORKDIR /app
-COPY --from=cv /cv.pdf /app/static/cv.pdf
-COPY --from=webp /app/static/ /app/static/
-COPY main.go /app
-COPY handlers.go /app
-COPY go.mod /app
-COPY go.sum /app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -trimpath -ldflags '-extldflags "-static"' -o main .
+COPY --from=images /app/static/images /images
+COPY --from=cv /cv.pdf /cv.pdf
+COPY --from=cv /reversed.pdf /reversed.pdf
 
-FROM scratch
+COPY . /src
 
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /etc/passwd /etc/passwd
-COPY --from=builder /etc/group /etc/group
-COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
+RUN set -eux; \
+    apk add git; \
+    cd /src; \
+    cp -r /images/* static/images/; \
+    cp /cv.pdf static/cv.pdf; \
+    cp /reversed.pdf static/reversed.pdf; \
+    CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' -trimpath -ldflags=-buildid= -o main .; \
+    # Clobber all the timestamps to make the build more reproducible
+    touch --date=@0 /src;
 
-WORKDIR /app
-COPY --from=builder /app/main /greboid.com
+FROM reg.g5d.dev/base:latest
+
+COPY --from=build /src/main /greboid.com
 EXPOSE 8080
-
-USER appuser:appuser
-
-CMD ["/greboid.com"]
+ENTRYPOINT ["/greboid.com"]

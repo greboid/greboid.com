@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"embed"
 	"flag"
 	"html/template"
+	"io"
 	"io/fs"
 	"log"
 	"net/http"
@@ -39,6 +41,7 @@ func main() {
 	router.Use(handlers.CompressHandler)
 	router.Use(NewLoggingHandler(os.Stdout))
 	router.HandleFunc("/css/main.css", serveCSS)
+	router.Path("/cv.pdf").HandlerFunc(serveCV(staticFiles))
 	router.PathPrefix("/").Handler(NotFoundHandler(CheckWebP(http.FileServer(http.FS(staticFiles)), staticFiles), staticFiles))
 
 	log.Print("Starting server.")
@@ -58,6 +61,27 @@ func main() {
 		log.Fatalf("Unable to shutdown: %s", err.Error())
 	}
 	log.Print("Finishing server.")
+}
+func serveCV(files fs.FS) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		file := "cv.pdf"
+		if *backwards {
+			file = "reversed.pdf"
+		}
+		data, err := files.Open(file)
+		if err != nil {
+			log.Printf("Error: %s", err.Error())
+			http.Error(w, "Internal error", http.StatusInternalServerError)
+			return
+		}
+		dataBytes, err := io.ReadAll(data)
+		if err != nil {
+			log.Printf("Error: %s", err.Error())
+			http.Error(w, "Internal error", http.StatusInternalServerError)
+			return
+		}
+		http.ServeContent(w, r, "cv.pdf", time.Time{}, bytes.NewReader(dataBytes))
+	}
 }
 
 func serveCSS(w http.ResponseWriter, _ *http.Request) {

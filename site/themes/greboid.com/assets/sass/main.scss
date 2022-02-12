@@ -33,15 +33,10 @@ $background-dark: "{{- (resources.Get "/images/black-bacon.jpg" | fingerprint ).
     opacity: 1;
   }
 }
-@keyframes header {
-  0% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
+
+html {
+  width: 100%;
+  height: 100%;
 }
 
 body {
@@ -49,25 +44,11 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 0 0 2.5vw 0;
-}
-
-html {
   background: var(--background);
   background-size: cover;
-  width: 100%;
-  height: 100%;
   font-family: sans-serif;
 }
 
-#wrapper {
-  padding-bottom: 2.5vw;
-  margin-left: 2.5vw;
-  margin-right: 2.5vw;
-  height: 100%;
-  opacity: 0;
-  animation: wrapper 0.5s forwards;
-}
 #overlay {
   height: 100%;
   left: 0;
@@ -78,12 +59,16 @@ html {
   z-index: -1;
 }
 
-header {
+#wrapper {
+  padding: 0 2.5vw 2.5vw 2.5vw;
+  height: 100%;
+  animation: wrapper 0.5s forwards;
+}
+
+header.tall {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  opacity: 0;
-  animation: header 0.7s 0.2s forwards;
 }
 
 header.tall h1 {
@@ -113,7 +98,7 @@ a {
 body > nav {
   display: flex;
   justify-content: flex-end;
-  background: rgba(var(--background-colour), 0.75);
+  background: var(--background-colour-trans);
   padding: 0.5em;
 }
 
@@ -137,6 +122,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2em;
 }
 
 header.tall {
@@ -144,24 +130,7 @@ header.tall {
 }
 
 main {
-  display: flex;
-  flex-direction: row;
-  gap: 2.5vw;
-  justify-content: center;
-  min-height: 85vh;
-  width: 100%;
-}
-
-main nav {
-  padding: 2em;
   background: var(--background-colour-trans);
   border-radius: 0.5em;
-  width: 10vw;
-}
-
-main article {
   padding: 2em;
-  background: var(--background-colour-trans);
-  border-radius: 0.5em;
-  width: 100%;
 }

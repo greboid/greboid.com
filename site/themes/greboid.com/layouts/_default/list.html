@@ -1,4 +1,4 @@
-{{ define "main" }}
+{{- define "main" -}}
 <div id="wrapper">
     <header>
         <h1>{{ .Title }}</h1>
@@ -8,13 +8,13 @@
             {{ .Content }}
             <hr>
             <ul>
-                {{ range where .Site.Pages "Section" "blog" }}
-                {{ if not .IsNode }}
+                {{- range where .Site.Pages "Section" "blog" -}}
+                {{- if not .IsNode -}}
                 <li><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Summary }}</li>
-                {{ end }}
-                {{ end }}
+                {{- end -}}
+                {{- end -}}
             </ul>
         </article>
     </main>
 </div>
-{{ end }}
+{{- end -}}

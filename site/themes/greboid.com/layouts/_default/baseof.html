@@ -8,7 +8,7 @@
 <body>
 <div id="bg"></div>
 <div id="overlay"></div>
-{{ if .Site.Params.BlogEnabled }}
+{{ if .Site.Params.BlogEnabled | eq (index (split .URL "/") 1) "blog" }}
 {{ partial "mainmenu.html" . }}
 {{ end }}
 {{- block "main" . }}{{- end }}

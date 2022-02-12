@@ -75,6 +75,7 @@ html {
   top: 0;
   width: 100%;
   background: var(--overlay);
+  z-index: -1;
 }
 
 header {

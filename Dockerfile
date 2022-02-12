@@ -12,7 +12,7 @@ FROM webp as minify
 COPY --from=hugo --chown=65532:65532 /tmp/public /tmp/public
 USER 65532:65532
 RUN set -eux; \
-    find /tmp/public -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' -exec cwebp -q 6 "{}" -o "{}.webp" \;;
+    find /tmp/public \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' \) -exec cwebp -q 60 "{}" -o "{}.webp" \;;
 
 FROM reg.g5d.dev/nginx:latest AS nginx
 

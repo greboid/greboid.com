@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>{{ block "title" . }}{{ if not (eq .Title "") }}{{.Title }} &ndash; {{ end }}{{ .Site.Title }}{{ end }}</title>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+{{ $style := resources.Get "sass/main.scss"  | resources.ExecuteAsTemplate "css/main.css" . | toCSS | minify | fingerprint }}
+<link href="{{ $style.Permalink }}" rel="stylesheet" type="text/css">
+<body>
+<div id="bg"></div>
+<div id="overlay"></div>
+{{ if .Site.Params.BlogEnabled }}
+{{ partial "mainmenu.html" . }}
+{{ end }}
+{{- block "main" . }}{{- end }}
+</body>
+</html>

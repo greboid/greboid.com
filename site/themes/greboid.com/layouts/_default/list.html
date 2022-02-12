@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div id="wrapper">
+    <header>
+        <h1>{{ .Title }}</h1>
+    </header>
+    <main>
+        <article>
+            {{ .Content }}
+            <hr>
+            <ul>
+                {{ range where .Site.Pages "Section" "blog" }}
+                {{ if not .IsNode }}
+                <li><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Summary }}</li>
+                {{ end }}
+                {{ end }}
+            </ul>
+        </article>
+    </main>
+</div>
+{{ end }}

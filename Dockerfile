@@ -1,7 +1,7 @@
 FROM reg.c5h.io/hugo as hugo
 
 COPY site /tmp/src
-RUN ["hugo", "-v", "-s", "/tmp/src", "-d", "/tmp/public"]
+RUN ["hugo", "-v", "-s", "/tmp/src"]
 
 FROM reg.g5d.dev/alpine as webp
 

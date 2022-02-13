@@ -5,8 +5,8 @@ $color-white: rgb(255,255,255);
 $color-white-trans: rgba($color-white, .75);
 $color-black-trans: rgba($color-black, .75);
 
-$background-light: "{{- (resources.Get "/images/bacon-bg.jpg" | fingerprint ).Permalink }}";
-$background-dark: "{{- (resources.Get "/images/black-bacon.jpg" | fingerprint ).Permalink }}";
+$background-light: "{{- (resources.Get "images/bacon-bg.jpg" | fingerprint ).Permalink }}";
+$background-dark: "{{- (resources.Get "images/black-bacon.jpg" | fingerprint ).Permalink }}";
 
 :root {
   --background-colour: #{$color-white};

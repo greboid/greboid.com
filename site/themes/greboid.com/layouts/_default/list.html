@@ -4,14 +4,12 @@
         <h1>{{ .Title }}</h1>
     </header>
     <main>
-        <article>
-            {{- .Content }}
-                {{- range where .Site.Pages "Section" "blog" -}}
-                {{- if not .IsNode -}}
-                <p><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Summary }}</p>
-                {{- end -}}
-                {{- end -}}
-        </article>
+        {{- .Content }}
+            {{- range where .Site.Pages "Section" "blog" -}}
+            {{- if not .IsNode -}}
+            <p><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Summary }}</p>
+            {{- end -}}
+            {{- end -}}
     </main>
 </div>
 {{- end -}}

@@ -100,7 +100,7 @@ a {
 body > nav {
   display: flex;
   justify-content: flex-end;
-  background: var(--background-colour-trans);
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 80%, var(--background-colour-trans) 100%);
   padding: 0.5em;
 }
 

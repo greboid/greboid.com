@@ -6,13 +6,11 @@
     <main>
         <article>
             {{- .Content }}
-            <ul>
                 {{- range where .Site.Pages "Section" "blog" -}}
                 {{- if not .IsNode -}}
-                <li><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Summary }}</li>
+                <p><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Summary }}</p>
                 {{- end -}}
                 {{- end -}}
-            </ul>
         </article>
     </main>
 </div>

@@ -1,37 +1,19 @@
-FROM reg.g5d.dev/alpine:latest AS images
+#Generate site with Hugo
+FROM reg.c5h.io/hugo as hugo
+COPY site /tmp/src
+COPY --from=ghcr.io/greboid/cv /cv.pdf /tmp/src/static/cv.pdf
+RUN ["hugo", "-v", "-s", "/tmp/src"]
 
-COPY . /src
+#Minify + Image optimisation
+FROM reg.g5d.dev/alpine as minify
+RUN apk add --no-cache libwebp-tools;
+COPY --from=hugo --chown=65532:65532 /tmp/public /tmp/public
+USER 65532:65532
+RUN find /tmp/public \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' \) -exec cwebp -q 60 "{}" -o "{}.webp" \;;
 
-RUN set -eux; \
-    apk add libwebp-tools git coreutils bash; \
-    cd /src; \
-    mkdir -p /app/static/images; \
-    cp -r static/images /app/static; \
-    chmod +x minify.sh; \
-    ./minify.sh
+#Serve with nginx
+FROM reg.g5d.dev/nginx:latest AS nginx
+COPY --from=minify /tmp/public /src/public
+COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 
-FROM ghcr.io/greboid/cv:latest as cv
-
-FROM reg.g5d.dev/golang:latest AS build
-
-COPY --from=images /app/static/images /images
-COPY --from=cv /cv.pdf /cv.pdf
-COPY --from=cv /reversed.pdf /reversed.pdf
-
-COPY . /src
-
-RUN set -eux; \
-    apk add git; \
-    cd /src; \
-    cp -r /images/* static/images/; \
-    cp /cv.pdf static/cv.pdf; \
-    cp /reversed.pdf static/reversed.pdf; \
-    CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' -trimpath -ldflags=-buildid= -o main .; \
-    # Clobber all the timestamps to make the build more reproducible
-    touch --date=@0 /src;
-
-FROM reg.g5d.dev/base:latest
-
-COPY --from=build /src/main /greboid.com
-EXPOSE 8080
-ENTRYPOINT ["/greboid.com"]
+ENTRYPOINT ["/nginx"]

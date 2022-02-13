@@ -1,1 +1,5 @@
-.idea
+.idea/
+.hugo_build.lock
+*.iml
+public/
+resources/

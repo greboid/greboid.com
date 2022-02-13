@@ -1,0 +1,17 @@
+{{- define "main" -}}
+<div id="wrapper">
+    <header>
+        <h1>{{ .Title }}</h1>
+    </header>
+    <main>
+        {{- .Content }}
+            {{- range where .Site.Pages "Section" "blog" -}}
+            {{- if not .IsNode -}}
+            <p><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Summary }}</p>
+            {{- else -}}
+                <p>No posts available</p>
+            {{- end -}}
+            {{- end -}}
+    </main>
+</div>
+{{- end -}}

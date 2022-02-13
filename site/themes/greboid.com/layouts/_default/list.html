@@ -5,8 +5,7 @@
     </header>
     <main>
         <article>
-            {{ .Content }}
-            <hr>
+            {{- .Content }}
             <ul>
                 {{- range where .Site.Pages "Section" "blog" -}}
                 {{- if not .IsNode -}}

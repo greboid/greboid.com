@@ -8,7 +8,7 @@ fingerprint -}}
 <link href="{{ $style.Permalink }}" rel="stylesheet" type="text/css">
 <body>
 <div id="overlay"></div>
-{{- if .Site.Params.BlogEnabled | eq (index (split .RelPermalink "/") 1) "blog" -}}
+{{- if or (.Site.Params.BlogEnabled) (eq (index (split .RelPermalink "/") 1) "blog") -}}
 <nav>
     <ul>
         {{- $currentPage := . -}}

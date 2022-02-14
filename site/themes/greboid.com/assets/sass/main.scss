@@ -12,7 +12,7 @@ $background-dark: "{{- (resources.Get "images/black-bacon.jpg" | fingerprint ).P
   --background-colour: #{$color-white};
   --foreground-colour: #{$color-black};
   --background-colour-trans: #{$color-white-trans};
-  --background: #{$color-white} url(#{$background-light}) no-repeat fixed center center;
+  --background-image: url(#{$background-light});
   --overlay: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5), transparent);
 }
 
@@ -21,7 +21,7 @@ $background-dark: "{{- (resources.Get "images/black-bacon.jpg" | fingerprint ).P
     --background-colour: #{$color-black};
     --foreground-colour: #{$color-white};
     --background-colour-trans: #{$color-black-trans};
-    --background: #{$color-black} url(#{$background-dark}) no-repeat fixed center center;
+    --background-image: url(#{$background-dark});
     --overlay: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.5), transparent);
   }
 }
@@ -44,9 +44,19 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--background);
-  background-size: cover;
+  background: var(--background-colour);
   font-family: sans-serif;
+}
+body:after{
+      content:"";
+      position:fixed;
+      top:0;
+      height:100vh;
+      left:0;
+      right:0;
+      z-index: -2;
+      background: var(--background-image) center center;
+      background-size: cover;
 }
 
 #overlay {

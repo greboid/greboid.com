@@ -25,14 +25,6 @@ $background-dark: "{{- (resources.Get "images/black-bacon.jpg" | fingerprint ).P
     --overlay: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.5), transparent);
   }
 }
-@keyframes wrapper {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
 
 html {
   width: 100%;
@@ -71,7 +63,6 @@ body:after{
 
 #wrapper {
   padding: 0 2.5vw 2.5vw 2.5vw;
-  animation: wrapper 0.5s forwards;
   display: flex;
   flex-direction: column;
   flex-grow: 1;

@@ -28,7 +28,7 @@ jobs:
           extra-args: >
             --timestamp
             0
-          build-arg: |
+          build-args: |
             REVERSE=false
 
       - name: Build dioberg image
@@ -41,7 +41,7 @@ jobs:
           extra-args: >
             --timestamp
             0
-          build-arg: |
+          build-args: |
             REVERSE=true
 
       - name: Push to greboid registry

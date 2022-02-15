@@ -23,7 +23,7 @@ jobs:
         uses: redhat-actions/buildah-build@v2.9
         with:
           dockerfiles: Dockerfile
-          image: ${{ github.repository }}
+          image: greboid.com
           tags: latest
           extra-args: >
             --timestamp

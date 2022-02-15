@@ -18,7 +18,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build image
+      - name: Build greboid image
         id: build-image-auth
         uses: redhat-actions/buildah-build@v2.9
         with:
@@ -28,6 +28,22 @@ jobs:
           extra-args: >
             --timestamp
             0
+          build-arg: |
+            REVERSE=false
+
+      - name: Build dioberg image
+        id: build-image-auth
+        uses: redhat-actions/buildah-build@v2.9
+        with:
+          dockerfiles: Dockerfile
+          image: dioberg.co.uk
+          tags: latest
+          extra-args: >
+            --timestamp
+            0
+          build-arg: |
+            REVERSE=true
+
       - name: Push to registry
         uses: redhat-actions/push-to-registry@v2.5
         with:

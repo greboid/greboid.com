@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - master
-    tags:
-      - v*
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -20,20 +18,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Generate tags
-        id: tags
-        uses: greboid/docker-tags-action@v5.0.2
-        with:
-          separator: ' '
-          fullname: 'false'
-
       - name: Build image
         id: build-image-auth
         uses: redhat-actions/buildah-build@v2.9
         with:
           dockerfiles: Dockerfile
           image: ${{ github.repository }}
-          tags: ${{ steps.tags.outputs.tags }}
+          tags: latest
           extra-args: >
             --timestamp
             0
@@ -44,4 +35,4 @@ jobs:
           registry: ${{ secrets.REGISTRY }}
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASS }}
-          tags: ${{ steps.tags.outputs.tags }}
+          tags: latest

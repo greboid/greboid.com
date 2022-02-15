@@ -13,6 +13,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Log in to Red Hat Registry
+        uses: redhat-actions/podman-login@v1
+        with:
+          registry: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+
       - name: Generate tags
         id: tags
         uses: greboid/docker-tags-action@v5.0.2

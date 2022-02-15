@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Build greboid image
-        id: build-image-auth
+        id: build-image-greboid
         uses: redhat-actions/buildah-build@v2.9
         with:
           dockerfiles: Dockerfile
@@ -32,7 +32,7 @@ jobs:
             REVERSE=false
 
       - name: Build dioberg image
-        id: build-image-auth
+        id: build-image-dioberg
         uses: redhat-actions/buildah-build@v2.9
         with:
           dockerfiles: Dockerfile
@@ -44,10 +44,19 @@ jobs:
           build-arg: |
             REVERSE=true
 
-      - name: Push to registry
+      - name: Push to greboid registry
         uses: redhat-actions/push-to-registry@v2.5
         with:
-          image: ${{ steps.build-image-auth.outputs.image }}
+          image: ${{ steps.build-image-greboid.outputs.image }}
+          registry: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+          tags: latest
+
+      - name: Push to dioberg registry
+        uses: redhat-actions/push-to-registry@v2.5
+        with:
+          image: ${{ steps.build-image-dioberg.outputs.image }}
           registry: ${{ secrets.REGISTRY }}
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASS }}

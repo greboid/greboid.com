@@ -12,10 +12,12 @@ fingerprint -}}
 <div id="overlay"></div>
 {{- if or (.Site.Params.BlogEnabled) (eq (index (split .RelPermalink "/") 1) "blog") -}}
 <nav>
+    <span></span>
+    <h1>{{ .Title }}</h1>
     <ul>
         {{- $currentPage := . -}}
         {{- range .Site.Menus.main -}}
-        <li><a href="{{ .URL }}"><span>{{ .Name }}</span></a></li>
+        <li><a href="{{ .URL }}">{{ .Name }}</a></li>
         {{- end -}}
     </ul>
 </nav>

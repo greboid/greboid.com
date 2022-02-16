@@ -25,9 +25,6 @@ jobs:
           dockerfiles: Dockerfile
           image: greboid.com
           tags: latest
-          extra-args: >
-            --timestamp
-            0
           build-args: |
             REVERSE=false
 
@@ -38,9 +35,6 @@ jobs:
           dockerfiles: Dockerfile
           image: dioberg.co.uk
           tags: latest
-          extra-args: >
-            --timestamp
-            0
           build-args: |
             REVERSE=true
 

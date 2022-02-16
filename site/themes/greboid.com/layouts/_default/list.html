@@ -1,12 +1,14 @@
 {{- define "main" -}}
 <div id="wrapper">
     <main>
+        <article>
         {{- .Content }}
             {{- range where (where .Site.Pages "Section" "blog") "IsNode" false -}}
                 <p><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Date | dateFormat "Jan 2 2006" }}</p>
             {{- else -}}
                 <p>No posts available</p>
             {{- end -}}
+        </article>
     </main>
 </div>
 {{- end -}}

@@ -2,12 +2,10 @@
 <div id="wrapper">
     <main>
         {{- .Content }}
-            {{- range where .Site.Pages "Section" "blog" -}}
-            {{- if not .IsNode -}}
-            <p><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Summary }}</p>
+            {{- range where (where .Site.Pages "Section" "blog") "IsNode" false -}}
+                <p><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Summary }}</p>
             {{- else -}}
                 <p>No posts available</p>
-            {{- end -}}
             {{- end -}}
     </main>
 </div>

@@ -1,6 +1,9 @@
 {{ $img := $.Page.Resources.GetMatch (.Get 0) }}
-{{ $img = $img.Resize "x200" }}
+{{ if not $img }}
+    {{ $img = resources.Get "images/error.jpg" }}
+{{ end }}
+{{ $img := $img.Resize (.Get 3 | default "x200") }}
 <figure>
-    <img class="{{ (.Get 2 | default "right") }}" src="{{ $img.RelPermalink }}" alt="{{.Get 1}}" loading="lazy" />
-    <figcaption>{{.Get 1}}</figcaption>
+    <img class="{{ (.Get 2 | default "right") }}" src="{{ ($img | fingerprint).Permalink }}" alt="{{ (.Get 1 | default "Error") }}" loading="lazy"/>
+    <figcaption>{{ (.Get 1 | default "Error") }}</figcaption>
 </figure>

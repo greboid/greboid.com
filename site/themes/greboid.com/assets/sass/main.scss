@@ -58,7 +58,7 @@ body:after{
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 2.5em;
   text-shadow: var(--text-shadow);
 }
 
@@ -154,7 +154,8 @@ main {
 
 article {
   padding: 2em;
-  color: var(--text-colour)
+  color: var(--text-colour);
+  font-size: 1.2em;
 }
 
 article a {

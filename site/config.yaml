@@ -13,3 +13,7 @@ menu:
     - name: Blog
       url: /blog
       weight: 2
+markup:
+  highlight:
+    lineNos: false
+    noClasses: false

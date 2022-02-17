@@ -18,6 +18,7 @@ $background-dark: "{{- (resources.Get "images/black-bacon.jpg" | fingerprint ).P
   --overlay: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5), transparent);
   --text-shadow: 5px 5px 5px var(--background-colour);
   --text-colour: #{$text-light};
+  @import "syntaxlight.scss";
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,6 +30,7 @@ $background-dark: "{{- (resources.Get "images/black-bacon.jpg" | fingerprint ).P
     --overlay: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.5), transparent);
     --text-shadow: 0.05em 0.05em 0.05em var(--background-colour);
     --text-colour: #{$text-dark};
+    @import "syntaxdark.scss";
   }
 }
 
@@ -46,15 +48,15 @@ body {
   font-family: sans-serif;
 }
 body:after{
-      content:"";
-      position:fixed;
-      top:0;
-      height:100vh;
-      left:0;
-      right:0;
-      z-index: -2;
-      background: var(--background-image) center center;
-      background-size: cover;
+  content:"";
+  position:fixed;
+  top:0;
+  height:100vh;
+  left:0;
+  right:0;
+  z-index: -2;
+  background: var(--background-image) center center;
+  background-size: cover;
 }
 
 h1 {
@@ -169,4 +171,11 @@ article p {
 article ul {
   margin: 0;
   padding: 0 0 1em 1.5em;
+}
+
+article img {
+  padding: 1em 0 0 1em;
+}
+article figcaption {
+  padding: 0 0 1em 1em;
 }

@@ -1,0 +1,6 @@
+{{ $img := $.Page.Resources.GetMatch (.Get 0) }}
+{{ $img = $img.Resize "x200" }}
+<figure>
+    <img class="{{ (.Get 2 | default "right") }}" src="{{ $img.RelPermalink }}" alt="{{.Get 1}}" loading="lazy" />
+    <figcaption>{{.Get 1}}</figcaption>
+</figure>

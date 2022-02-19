@@ -118,7 +118,6 @@ a {
 
 body > nav {
   display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 
@@ -171,6 +170,9 @@ article p {
 article ul {
   margin: 0;
   padding: 0 0 1em 1.5em;
+}
+
+article figure {
 }
 
 article img {

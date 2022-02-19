@@ -3,7 +3,7 @@ title: 'Greg Holmes'
 theme: 'greboid.com'
 publishDir: '../public'
 params:
-  BlogEnabled: false
+  BlogEnabled: true
 menu:
   main:
     - identifier: home

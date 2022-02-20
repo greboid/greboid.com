@@ -1,0 +1,19 @@
+{
+  auto_https off
+  admin off
+}
+:80 {
+  @www header_regexp www Host ^www\.(.*)$
+  @acceptwebp header Accept *image/webp*
+  redir @www {scheme}://{re.www.1} 301
+  handle @acceptwebp {
+    try_files {path}.webp
+  }
+  encode zstd gzip
+  root * /html
+  file_server
+  handle_errors {
+    rewrite * /{http.error.status_code}.html
+    file_server
+  }
+}

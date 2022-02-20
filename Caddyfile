@@ -9,6 +9,10 @@
   handle @acceptwebp {
     try_files {path}.webp
   }
+  @static path *.css *.js *.ico *.gif *.jpg *.jpeg *.png *.svg *.woff
+  handle @static {
+    header Cache-Control "public, max-age=31557600, must-revalidate"
+  }
   encode zstd gzip
   root * /html
   file_server

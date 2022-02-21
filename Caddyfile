@@ -9,17 +9,13 @@
   }
   @static {
     path *.css *.js *.ico *.gif *.jpg *.jpeg *.png *.svg *.woff *.webp
-    not {
-      header Accept *image/webp*
-    }
   }
   redir @www {scheme}://{re.www.1} 301
-  handle @static {
+  route @static {
     header Cache-Control "public, max-age=31557600, must-revalidate"
   }
-  handle @acceptwebp {
+  route @acceptwebp {
     try_files {path}.webp
-    header Cache-Control "public, max-age=31557600, must-revalidate"
   }
   encode zstd gzip
   root * /html

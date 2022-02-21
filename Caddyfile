@@ -4,12 +4,8 @@
 }
 :80 {
   @www header_regexp www Host ^www\.(.*)$
-  @acceptwebp {
-    header Accept *image/webp*
-  }
-  @static {
-    path *.css *.js *.ico *.gif *.jpg *.jpeg *.png *.svg *.woff *.webp
-  }
+  @acceptwebp header Accept *image/webp*
+  @static path *.css *.js *.ico *.gif *.jpg *.jpeg *.png *.svg *.woff *.webp
   redir @www {scheme}://{re.www.1} 301
   route @static {
     header Cache-Control "public, max-age=31557600, must-revalidate"

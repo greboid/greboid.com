@@ -15,9 +15,13 @@
   }
   encode zstd gzip
   root * /html
-  file_server
+  file_server {
+    precompressed br gzip
+  }
   handle_errors {
     rewrite * /{http.error.status_code}.html
-    file_server
+    file_server {
+      precompressed br gzip
+    }
   }
 }

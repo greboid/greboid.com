@@ -18,10 +18,11 @@ RUN ["hugo", "-D", "-v", "-s", "/build/site"]
 
 #Minify + Image optimisation
 FROM reg.g5d.dev/alpine as minify
-RUN apk add --no-cache libwebp-tools;
+RUN apk add --no-cache libwebp-tools brotli;
 COPY --from=hugo --chown=65532:65532 /build/public /tmp/public
 USER 65532:65532
-RUN find /tmp/public \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' \) -exec cwebp -q 60 "{}" -o "{}.webp" \;;
+RUN find /tmp/public \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' \) -exec cwebp -q 60 "{}" -o "{}.webp" \; ;\
+    find /tmp/public \( -name '*.css' -o -name '*.html' -o -name '*.xml' \) -exec brotli --best "{}" \;
 
 #Serve with nginx
 FROM reg.g5d.dev/caddy:latest

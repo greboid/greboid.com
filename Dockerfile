@@ -25,6 +25,6 @@ RUN find /tmp/public \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' \) -exe
     find /tmp/public \( -name '*.css' -o -name '*.html' -o -name '*.xml' \) -exec brotli --best "{}" \; -exec gzip --best -k {} \;
 
 #Serve with nginx
-FROM reg.g5d.dev/caddy:latest
-COPY --from=minify /tmp/public /html
-COPY Caddyfile /etc/caddy/Caddyfile
+FROM reg.g5d.dev/apache
+COPY --from=minify /tmp/public /usr/local/apache2/htdocs
+COPY httpd.conf /usr/local/apache2/conf/httpd.conf

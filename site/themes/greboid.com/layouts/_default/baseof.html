@@ -13,7 +13,7 @@ fingerprint -}}
 {{- if or (.Site.Params.BlogEnabled) (eq (index (split .RelPermalink "/") 1) "blog") -}}
 <nav>
     <span></span>
-    <h1>{{ .Title }}</h1>
+    {{- block "titlehead" . -}}<h1>{{ .Title }}</h1>{{- end -}}
     <ul>
         {{- $currentPage := . -}}
         {{- range .Site.Menus.main -}}

@@ -22,9 +22,12 @@ RUN apk add --no-cache libwebp-tools brotli libavif-apps;
 COPY --from=hugo --chown=65532:65532 /build/public /tmp/public
 USER 65532:65532
 RUN find /tmp/public \( -name '*.jpg' -o -name '*.png' -o -name '*.jpeg' \) -exec cwebp -q 60 "{}" -o "{}.webp" \; -exec avifenc -j all --max 40 --maxalpha 63 -r l -s 0 "{}" "{}.avif" \; ;\
-    find /tmp/public \( -name '*.css' -o -name '*.html' -o -name '*.xml' \) -exec brotli --best "{}" \; -exec gzip --best -k {} \;
+    find /tmp/public \( -name '*.css' -o -name '*.html' -o -name '*.xml' \) -exec brotli --best "{}" \; -exec gzip --best -k {} \; ; \
+    find /tmp/public -name '*.css' -exec mv "{}" "{}.css" \; ;\
+    find /tmp/public -name '*.html' -exec mv "{}" "{}.html" \; ;\
+    find /tmp/public -name '*.xml' -exec mv "{}" "{}.xml" \;
 
 #Serve with nginx
 FROM reg.g5d.dev/apache
-COPY --from=minify /tmp/public /usr/local/apache2/htdocs
+COPY --chown=65532:65532 --from=minify /tmp/public /usr/local/apache2/htdocs
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf

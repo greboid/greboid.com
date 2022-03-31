@@ -2,6 +2,7 @@ languageCode: 'en-GB'
 title: 'Greg Holmes'
 theme: 'greboid.com'
 publishDir: '../public'
+baseURL: "https://greboid.com/"
 params:
   BlogEnabled: true
 menu:

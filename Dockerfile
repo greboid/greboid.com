@@ -4,14 +4,17 @@ ARG REVERSE=false
 RUN apk add patch
 COPY reversed.patch /build/reversed.patch
 COPY site/themes/greboid.com/assets/sass/main.scss /build/site/themes/greboid.com/assets/sass/main.scss
+COPY site/config.yaml /build/site/config.yaml
 COPY --from=ghcr.io/greboid/cv /cv.pdf /cv.pdf
 COPY --from=ghcr.io/greboid/cv /reversed.pdf /reversed.pdf
 RUN  if [ "${REVERSE}" == "true" ]; then patch /build/site/themes/greboid.com/assets/sass/main.scss < /build/reversed.patch; fi
 RUN  if [ "${REVERSE}" == "true" ]; then mv /reversed.pdf /cv.pdf; fi
+RUN  if [ "${REVERSE}" == "true" ]; then sed -i 's+https://greboid.com/+https://dioberg.co.uk+' /build/site/config.yaml; fi
 
 #Generate site with Hugo
 FROM reg.g5d.dev/hugo as hugo
 COPY --chown=65532:65532 site /build/site
+COPY --chown=65532:65532 --from=reversed /build/site/config.yaml /build/site/config.yaml
 COPY --chown=65532:65532 --from=reversed /build/site/themes/greboid.com/assets/sass/main.scss /build/site/themes/greboid.com/assets/sass/main.scss
 COPY --from=reversed /cv.pdf /build/site/static/cv.pdf
 RUN ["hugo", "-D", "-v", "-s", "/build/site"]

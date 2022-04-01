@@ -1,0 +1,4 @@
+{{ $title := .Get 1 | default "Error" }}
+{{ with $.Page.Resources.GetMatch (.Get 0) }}
+    <a href="{{ .Permalink }}">{{ $title }}</a>
+{{ end }}

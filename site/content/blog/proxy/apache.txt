@@ -1,0 +1,53 @@
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+LoadModule ssl_module modules/mod_ssl.so
+LoadModule unixd_module modules/mod_unixd.so
+LoadModule authz_core_module modules/mod_authz_core.so
+LoadModule authn_core_module modules/mod_authn_core.so
+LoadModule slotmem_shm_module modules/mod_slotmem_shm.so
+LoadModule lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so
+LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule mpm_event_module modules/mod_mpm_event.so
+
+User nonroot
+
+ServerName proxy.localhost
+Listen 80
+Listen 443
+
+ServerTokens Prod
+
+ErrorLog /dev/stderr
+
+KeepAlive On
+KeepAliveTimeout 5
+MaxKeepAliveRequests 128
+
+ServerLimit 10
+StartServers 4
+ThreadLimit 128
+ThreadsPerChild 128
+MinSpareThreads 256
+MaxSpareThreads 512
+MaxRequestWorkers 1280
+MaxConnectionsPerChild 2048
+
+<Proxy balancer://greboid-com>
+  BalancerMember http://greboid-greboid-1:8080/
+</Proxy>
+<VirtualHost *:80>
+    ServerName greboid.com
+    RewriteEngine On
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}$1 [R=301,L]
+</VirtualHost>
+<VirtualHost *:8443>
+  ServerName greboid.com
+  ServerAlias www.greboid.com
+  SSLEngine On
+  SSLCertificateFile /certs/greboid.com.pem
+  Protocols h2 http/1.1
+  ProxyPreserveHost On
+  ProxyPass / balancer://greboid-com/
+</VirtualHost>

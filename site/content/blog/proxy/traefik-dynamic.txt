@@ -1,0 +1,18 @@
+http:
+  routers:
+    greboid-com:
+      rule: "Host(`greboid.com`)"
+      service: greboid-com
+      tls: {}
+  services:
+    greboid-com:
+      loadBalancer:
+        servers:
+          - url: http://greboid-greboid-1:8080
+tls:
+  options:
+    default:
+      sniStrict: true
+  certificates:
+    - certFile: "/certs/greboid.com.pem"
+      keyFile: "/certs/greboid.com.key"

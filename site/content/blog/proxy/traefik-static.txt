@@ -1,0 +1,17 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: true
+
+log:
+  level: INFO
+
+entryPoints:
+  http:
+    address: :80
+  https:
+    address: :443
+
+providers:
+  file:
+    filename: /config/traefikdynamic.yml
+    watch: true

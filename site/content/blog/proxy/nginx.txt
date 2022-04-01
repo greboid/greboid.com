@@ -1,0 +1,39 @@
+daemon off;
+worker_processes 2;
+worker_rlimit_nofile 40000;
+events {
+    worker_connections  1024;
+    multi_accept on;
+    use epoll;
+}
+http {
+    sendfile        on;
+    tcp_nopush     on;
+    tcp_nodelay        on;
+    keepalive_timeout 15;
+    proxy_buffering off;
+    access_log /dev/null;
+    error_log /dev/null;
+    upstream greboid-com {
+        server greboid-greboid-1:8080;
+    }
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name _;
+        return 301 https://$host$request_uri;
+    }
+    server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name greboid.com www.greboid.com;
+    ssl_certificate /certs/greboid.com.pem;
+    ssl_certificate_key /certs/greboid.com.key;
+
+        location / {
+            proxy_pass http://greboid-com;
+            proxy_set_header  X-Forwarded-Proto  https;
+            proxy_set_header   Host             $host;
+        }
+    }
+}

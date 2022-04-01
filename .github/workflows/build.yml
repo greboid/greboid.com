@@ -29,6 +29,15 @@ jobs:
           build-args: |
             REVERSE=false
 
+      - name: Push to greboid registry
+        uses: redhat-actions/push-to-registry@v2.5
+        with:
+          image: ${{ steps.build-image-greboid.outputs.image }}
+          registry: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+          tags: latest
+
       - name: Build dioberg image
         id: build-image-dioberg
         uses: redhat-actions/buildah-build@v2.9
@@ -38,15 +47,6 @@ jobs:
           tags: latest
           build-args: |
             REVERSE=true
-
-      - name: Push to greboid registry
-        uses: redhat-actions/push-to-registry@v2.5
-        with:
-          image: ${{ steps.build-image-greboid.outputs.image }}
-          registry: ${{ secrets.REGISTRY }}
-          username: ${{ secrets.REGISTRY_USER }}
-          password: ${{ secrets.REGISTRY_PASS }}
-          tags: latest
 
       - name: Push to dioberg registry
         uses: redhat-actions/push-to-registry@v2.5

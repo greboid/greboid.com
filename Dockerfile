@@ -17,7 +17,7 @@ COPY --chown=65532:65532 site /build/site
 COPY --chown=65532:65532 --from=reversed /build/site/config.yaml /build/site/config.yaml
 COPY --chown=65532:65532 --from=reversed /build/site/themes/greboid.com/assets/sass/main.scss /build/site/themes/greboid.com/assets/sass/main.scss
 COPY --from=reversed /cv.pdf /build/site/static/cv.pdf
-RUN ["hugo", "-D", "-v", "-s", "/build/site"]
+RUN ["hugo", "-v", "-s", "/build/site"]
 
 #Minify + Image optimisation
 FROM reg.g5d.dev/alpine as minify

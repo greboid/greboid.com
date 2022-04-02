@@ -1,7 +1,7 @@
 ---
 draft: "false"
 title: "CV"
-date: "2022-02-13T18:08:20Z"
+date: "2022-02-16T18:08:20Z"
 resources:
 - name: "basic-outline"
 - name: "before-tidying"

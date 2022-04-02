@@ -4,8 +4,8 @@
         <article>
             {{- .Content }}
             {{- range where (where .Site.Pages "Section" "blog") "IsNode" false -}}
-            <p><a href="{{ .Permalink }}">{{ .Title }}</a><br>
-                {{ .Date | dateFormat "Jan 2 2006" }}</p>
+           <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+            <p>{{ .Date | dateFormat "Jan 2 2006" }}</p>
             <p>{{.Summary }}</p>
             {{ if .Truncated }}
             <p>

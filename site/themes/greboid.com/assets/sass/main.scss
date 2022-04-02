@@ -11,6 +11,7 @@ $background-light: "{{- (resources.Get "images/bacon-bg.jpg" | fingerprint ).Per
 $background-dark: "{{- (resources.Get "images/black-bacon.jpg" | fingerprint ).Permalink }}";
 
 :root {
+  --font-weight: 400;
   --background-colour: #{$color-white};
   --foreground-colour: #{$color-black};
   --background-colour-trans: #{$color-white-trans};
@@ -24,6 +25,7 @@ $background-dark: "{{- (resources.Get "images/black-bacon.jpg" | fingerprint ).P
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --font-weight: 350;
     --background-colour: #{$color-black};
     --foreground-colour: #{$color-white};
     --background-colour-trans: #{$color-black-trans};
@@ -48,6 +50,7 @@ body {
   height: 100%;
   background: var(--background-colour);
   font-family: sans-serif;
+  font-weight: var(--font-weight);
 }
 body:after{
   content:"";

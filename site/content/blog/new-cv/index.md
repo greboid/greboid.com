@@ -3,7 +3,6 @@ draft: "false"
 title: "CV"
 date: "2022-02-13T18:08:20Z"
 resources:
-
 - name: "basic-outline"
 - name: "before-tidying"
 - name: "makeshift-debugging"
@@ -21,6 +20,8 @@ layouts and update fonts to this and deviated from the upstream version consider
 harder it was to make Awesome-CV do what I wanted. Everytime I made some minor changes, some very annoying side effects
 would crop up, the LaTeX class for this is fairly complicated and quite hard to jump in and edit as you need to, it's
 mostly designed to be completely adjusted with variables in the document, so decided I should look at alternatives.
+
+<!--more-->
 
 After looking around at a number of other templates I decided the best way forward, armed with my additional LaTeX
 knowledge, would be to create my own from scratch, I had picked up at least the basics of LaTeX from all the tweaks I'd

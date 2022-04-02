@@ -23,6 +23,8 @@ the alternatives, and as everything is in docker and the configs can be template
 pick a proxy would be to spin up a few instances of Dotege with different templates and see how they handled running my
 site with some simple benchmarks and pick one that was nicest to configure whilst being quite performant.
 
+<!--more-->
+
 The below results were a 10-second run, with 10 threads using [wrk](https://github.com/wg/wrk), whilst the configs for
 these might not be the most optimised examples, I think they're fairly optimised and definitely typical examples. 
 This should give a look at both the latency and throughput of the proxy, I picked a few big examples and them some less 

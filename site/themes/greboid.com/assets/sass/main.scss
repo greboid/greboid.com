@@ -173,6 +173,10 @@ article a {
   color: var(--text-colour);
 }
 
+article h2 a {
+  color: var(--foreground-colour);
+}
+
 article p {
   padding-bottom: 1em;
   text-align: justify;

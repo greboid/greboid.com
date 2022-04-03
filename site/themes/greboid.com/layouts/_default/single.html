@@ -1,9 +1,11 @@
 {{- define "main" -}}
 <div id="wrapper">
     <main>
-        <article>
-            {{ .Content }}
-        </article>
+        <div id="content">
+            <article>
+                {{ .Content }}
+            </article>
+        </div>
     </main>
 </div>
 {{- end -}}

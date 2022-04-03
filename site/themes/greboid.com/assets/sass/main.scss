@@ -90,13 +90,12 @@ header.tall {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-}
-
-header.tall h1 {
-  font-size: 5em;
-  font-weight: 900;
-  padding: 0 0 0.3em 0;
-  margin: 0;
+  h1 {
+    font-size: 5em;
+    font-weight: 900;
+    padding: 0 0 0.3em 0;
+    margin: 0;
+  }
 }
 
 header > ul {
@@ -162,45 +161,38 @@ main {
   height: 100%;
 }
 
-article {
+#content {
   padding: 2em;
   color: var(--text-colour);
   font-size: 1.2em;
-  border: 1px solid var(--foreground-colour)
-}
+  border: 1px solid var(--foreground-colour);
+  a {
+    color: var(--text-colour);
+  }
 
-article a {
-  color: var(--text-colour);
-}
+  h2 a {
+    color: var(--foreground-colour);
+  }
+  p {
+    padding-bottom: 1em;
+    text-align: justify;
+    text-justify: inter-word;
+  }
 
-article h2 a {
-  color: var(--foreground-colour);
-}
-
-article p {
-  padding-bottom: 1em;
-  text-align: justify;
-  text-justify: inter-word;
-}
-
-article ul {
-  margin: 0;
-  padding: 0 0 1em 1.5em;
-}
-
-article figure {
-}
-
-article img {
-  padding: 1em 0 0 1em;
-}
-article figcaption {
-  padding: 0 0 1em 1em;
-}
-
-article hr {
-  border-color: inherit;
-  color: var(--foreground-colour);
+  ul {
+    margin: 0;
+    padding: 0 0 1em 1.5em;
+  }
+  img {
+    padding: 1em 0 0 1em;
+  }
+  figcaption {
+    padding: 0 0 1em 1em;
+  }
+  hr {
+    border-color: inherit;
+    color: var(--foreground-colour);
+  }
 }
 
 table {

@@ -2,8 +2,8 @@
 <div id="wrapper">
     <main>
         <article>
-            {{- .Content }}
-            {{- range where (where .Site.Pages "Section" "blog") "IsNode" false -}}
+            {{- $articles := where (where .Site.Pages "Section" "blog") "IsNode" false }}
+            {{- range $index, $article := $articles -}}
            <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
             <p>{{ .Date | dateFormat "Jan 2 2006" }}</p>
             <p>{{.Summary }}</p>
@@ -11,7 +11,7 @@
             <p>
             <a href="{{ .RelPermalink }}">Continue reading…</a>
             </p>
-            <hr>
+            {{ if ne (add $index 1) (len $articles) }}<hr>{{end}}
             {{ end }}
             {{- else -}}
             <p>No posts available</p>

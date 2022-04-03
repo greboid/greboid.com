@@ -162,6 +162,7 @@ article {
   padding: 2em;
   color: var(--text-colour);
   font-size: 1.2em;
+  border: 1px solid var(--foreground-colour)
 }
 
 article a {
@@ -170,6 +171,8 @@ article a {
 
 article p {
   padding-bottom: 1em;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 article ul {
@@ -186,6 +189,12 @@ article img {
 article figcaption {
   padding: 0 0 1em 1em;
 }
+
+article hr {
+  border-color: inherit;
+  color: var(--foreground-colour);
+}
+
 table {
   border-collapse: collapse;
 }

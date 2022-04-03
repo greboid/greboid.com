@@ -103,6 +103,8 @@ header > ul {
   padding: 0;
   margin: 0;
   list-style: none;
+  font-weight: 500;
+  text-shadow: var(--text-shadow);
 }
 
 header > ul li {
@@ -115,6 +117,8 @@ header > ul li {
 body nav ul li a {
   text-shadow: var(--text-shadow);
   text-decoration: none;
+  font-weight: 500;
+  font-size: 1.25em;
 }
 
 a {

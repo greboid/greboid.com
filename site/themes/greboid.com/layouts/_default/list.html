@@ -2,7 +2,7 @@
 <div id="wrapper">
     <main>
         <div id="content">
-            {{- $articles := where (where .Site.Pages "Section" "blog") "IsNode" false }}
+            {{- $articles := where (where .Site.Pages "Section" .Section) "IsNode" false }}
             {{- range $index, $article := $articles -}}
             <article>
                 <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>

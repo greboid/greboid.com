@@ -30,7 +30,7 @@ jobs:
             REVERSE=false
 
       - name: Push to greboid registry
-        uses: redhat-actions/push-to-registry@v2.6
+        uses: redhat-actions/push-to-registry@v2.7
         with:
           image: ${{ steps.build-image-greboid.outputs.image }}
           registry: ${{ secrets.REGISTRY }}
@@ -49,7 +49,7 @@ jobs:
             REVERSE=true
 
       - name: Push to dioberg registry
-        uses: redhat-actions/push-to-registry@v2.6
+        uses: redhat-actions/push-to-registry@v2.7
         with:
           image: ${{ steps.build-image-dioberg.outputs.image }}
           registry: ${{ secrets.REGISTRY }}

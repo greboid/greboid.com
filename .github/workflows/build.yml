@@ -21,7 +21,7 @@ jobs:
 
       - name: Build greboid image
         id: build-image-greboid
-        uses: redhat-actions/buildah-build@v2.10
+        uses: redhat-actions/buildah-build@v2.11
         with:
           dockerfiles: Dockerfile
           image: greboid.com
@@ -40,7 +40,7 @@ jobs:
 
       - name: Build dioberg image
         id: build-image-dioberg
-        uses: redhat-actions/buildah-build@v2.10
+        uses: redhat-actions/buildah-build@v2.11
         with:
           dockerfiles: Dockerfile
           image: dioberg.co.uk

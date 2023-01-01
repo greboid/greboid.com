@@ -13,7 +13,7 @@ jobs:
       image: 'greboid.com'
       registry: 'reg.g5d.dev'
       build-args: 'REVERSE=false'
-      prelogin: true
+      preloginghcr: true
     secrets: inherit
   dioberg:
     uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
@@ -21,5 +21,5 @@ jobs:
       image: 'dioberg.co.uk'
       registry: 'reg.g5d.dev'
       build-args: 'REVERSE=true'
-      prelogin: true
+      preloginghcr: true
     secrets: inherit

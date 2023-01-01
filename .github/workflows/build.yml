@@ -7,6 +7,7 @@ on:
       - v*
 jobs:
   login:
+    runs-on: ubuntu-latest
     steps:
       - name: Log in to GHCR
         uses: redhat-actions/podman-login@v1

@@ -13,7 +13,6 @@ jobs:
       registry: 'reg.g5d.dev'
       build-args: 'REVERSE=false'
     secrets: inherit
-    needs: [ test ]
   dioberg:
     uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
     with:
@@ -21,4 +20,3 @@ jobs:
       registry: 'reg.g5d.dev'
       build-args: 'REVERSE=true'
     secrets: inherit
-    needs: [ test ]

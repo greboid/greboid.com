@@ -6,6 +6,14 @@ on:
     tags:
       - v*
 jobs:
+  login:
+    steps:
+      - name: Log in to GHCR
+        uses: redhat-actions/podman-login@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password:${{ secrets.GHCR_TOKEN }}
   greboid:
     uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
     with:

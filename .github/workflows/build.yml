@@ -10,17 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log in to GHCR
-        uses: redhat-actions/podman-login@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_TOKEN }}
+
   greboid:
     uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
     with:
       image: 'greboid.com'
       registry: 'reg.g5d.dev'
       build-args: 'REVERSE=false'
+      prelogin: true
     secrets: inherit
   dioberg:
     uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
@@ -28,4 +25,5 @@ jobs:
       image: 'dioberg.co.uk'
       registry: 'reg.g5d.dev'
       build-args: 'REVERSE=true'
+      prelogin: true
     secrets: inherit

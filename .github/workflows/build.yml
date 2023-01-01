@@ -6,11 +6,6 @@ on:
     tags:
       - v*
 jobs:
-  login:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Log in to GHCR
-
   greboid:
     uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
     with:

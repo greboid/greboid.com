@@ -1,3 +1,5 @@
+FROM ghcr.io/greboid/livecv:latest as cv
+
 #Reverse page
 FROM reg.g5d.dev/alpine as reversed
 ARG REVERSE=false
@@ -5,8 +7,8 @@ RUN apk add patch
 COPY reversed.patch /build/reversed.patch
 COPY site/themes/greboid.com/assets/sass/main.scss /build/site/themes/greboid.com/assets/sass/main.scss
 COPY site/config.yaml /build/site/config.yaml
-COPY --from=ghcr.io/greboid/livecv /cv.pdf /cv.pdf
-COPY --from=ghcr.io/greboid/livecv /reversed.pdf /reversed.pdf
+COPY --from=cv /cv.pdf /cv.pdf
+COPY --from=cv /reversed.pdf /reversed.pdf
 RUN  if [ "${REVERSE}" == "true" ]; then patch /build/site/themes/greboid.com/assets/sass/main.scss < /build/reversed.patch; fi
 RUN  if [ "${REVERSE}" == "true" ]; then mv /reversed.pdf /cv.pdf; fi
 RUN  if [ "${REVERSE}" == "true" ]; then sed -i 's+https://greboid.com/+https://dioberg.co.uk+' /build/site/config.yaml; fi

@@ -1,58 +1,24 @@
-name: docker build
+name: build
 on:
-  workflow_dispatch:
   push:
     branches:
       - master
+    tags:
+      - v*
 jobs:
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Log in to GHCR
-        uses: redhat-actions/podman-login@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_TOKEN }}
-
-      - name: Build greboid image
-        id: build-image-greboid
-        uses: redhat-actions/buildah-build@v2.11
-        with:
-          dockerfiles: Dockerfile
-          image: greboid.com
-          tags: latest
-          build-args: |
-            REVERSE=false
-
-      - name: Push to greboid registry
-        uses: redhat-actions/push-to-registry@v2.7
-        with:
-          image: ${{ steps.build-image-greboid.outputs.image }}
-          registry: ${{ secrets.REGISTRY }}
-          username: ${{ secrets.REGISTRY_USER }}
-          password: ${{ secrets.REGISTRY_PASS }}
-          tags: latest
-
-      - name: Build dioberg image
-        id: build-image-dioberg
-        uses: redhat-actions/buildah-build@v2.11
-        with:
-          dockerfiles: Dockerfile
-          image: dioberg.co.uk
-          tags: latest
-          build-args: |
-            REVERSE=true
-
-      - name: Push to dioberg registry
-        uses: redhat-actions/push-to-registry@v2.7
-        with:
-          image: ${{ steps.build-image-dioberg.outputs.image }}
-          registry: ${{ secrets.REGISTRY }}
-          username: ${{ secrets.REGISTRY_USER }}
-          password: ${{ secrets.REGISTRY_PASS }}
-          tags: latest
+  greboid:
+    uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
+    with:
+      image: 'greboid.com'
+      registry: 'reg.g5d.dev'
+      build-args: 'REVERSE=false'
+    secrets: inherit
+    needs: [ test ]
+  dioberg:
+    uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
+    with:
+      image: 'dioberg.co.uk'
+      registry: 'reg.g5d.dev'
+      build-args: 'REVERSE=true'
+    secrets: inherit
+    needs: [ test ]

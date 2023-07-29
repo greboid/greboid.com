@@ -34,7 +34,7 @@ common ones, the results were not exactly as expected.
 | Thread Req/sec | 50.95   | 12.40  | 180.00   | 82.14%    |
 | Total Req/sec  | 5193.85 |        |          |           |
 
-[Config](haproxy.txt)
+{% link './haproxy.txt', 'Config' %}
 &nbsp;
 ### [Centauri](https://github.com/csmith/centauri)
 |                | Avg     | Stdev   | Max     | +/- Stdev |
@@ -43,7 +43,7 @@ common ones, the results were not exactly as expected.
 | Thread Req/sec | 40.99   | 10.62   | 120.00  | 63.67%    |
 | Total Req/sec  | 4163.63 |         |         |           |
 
-[Config](centauri.txt)
+{% link './centauri.txt', 'Config' %}
 &nbsp;
 ### [Apache](https://httpd.apache.org/)
 |                | Avg     | Stdev   | Max      | +/- Stdev |
@@ -52,7 +52,7 @@ common ones, the results were not exactly as expected.
 | Thread Req/sec | 40.29   | 13.93   | 140.00   | 78.02%    |
 | Total Req/sec  | 4097.49 |         |          |           |
 
-[Config](apache.txt)
+{% link './apache.txt', 'Config' %}
 &nbsp;
 ### [Nginx](https://nginx.org)
 |                | Avg     | Stdev   | Max      | +/- Stdev |
@@ -61,7 +61,7 @@ common ones, the results were not exactly as expected.
 | Thread Req/sec | 33.75   | 9.17    | 111.00   | 75.97%    |
 | Total Req/sec  | 3412.71 |         |          |           |
 
-[Config](nginx.txt)
+{% link './nginx.txt', 'Config' %}
 &nbsp;
 ### [Traefik](https://traefik.io/traefik/)
 |                | Avg     | Stdev   | Max      | +/- Stdev |
@@ -70,7 +70,7 @@ common ones, the results were not exactly as expected.
 | Thread Req/sec | 25.69   | 9.44    | 120.00   | 74.22%    |
 | Total Req/sec  | 2529.13 |         |          |           |
 
-[Static Config](traefik-static.txt) [Dynamic Config](traefik-dynamic.txt)
+{% link './traefik-static.txt', 'Static Config' %} {% link './traefik-dynamic.txt', 'Dynamic Config' %}
 &nbsp;
 ### [Caddy](https://caddyserver.com/)
 |                | Avg     | Stdev   | Max      | +/- St dev |
@@ -79,7 +79,7 @@ common ones, the results were not exactly as expected.
 | Thread Req/sec | 19.83   | 6.84    | 80.00    | 60.57%     |
 | Total Req/sec  | 2017.68 |         |          |            |
 
-[Config](caddy.txt)
+{% link './caddy.txt', 'Config' %}
 &nbsp;
 
 Haproxy is an obvious leader here, it's a very well optimised long-established proxy, with no intentions to be anything 

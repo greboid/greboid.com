@@ -29,7 +29,7 @@ and got to work. LaTeX is definitely not user-friendly and documentation for it,
 I was, however, quite surprised with how quickly I made progress, it only took about an hour to get the basics of a CV
 up and running.
 
-![Basic Outline](./basic-outline.jpg)
+{% image './basic-outline.jpg' %}
 
 Obviously this needs a huge amount of work to make it into a CV, and a lot of this is fighting with latex defaults,
 whitespace and fonts and margins to get something less ugly.  Unfortunately I didn't make any git commits doing this, so
@@ -42,7 +42,7 @@ over the place, which from my experience with websites feels like its going to c
 spent a couple of hours trying to debug a minor whitespace issue, latex isn't good at debugging in general and I could
 find no way to debug whitespace at all, so I turned to adding horizontal lines around places I was having issues.
 
-![Makeshift Deubbing](./makeshift-debugging.png)
+{% image './makeshift-debugging.png' %}
 
 One of these was an awkward gap above a list that I'd spent about 2 hours changing various things, and eventually gave
 up and pasted the above screenshot and the below source snippet to IRC, asking if anyone could see why there was a
@@ -59,7 +59,7 @@ The response was an exceptionally sarcastic "have you tried removing that \\\\",
 the newline and this not working how I wanted, but I removed the now glaringly obvious new line and my whitespace issue
 was solved 🤦.
 
-![Finished CV](./finished-cv.jpg)
+{% image './finished-cv.jpg' %}
 
 I now have a CV that is nice and simple to update and make changes to, It builds as a PDF, so I can both print this
 easily and provide electronically as required, so meets all my initial requirements. As with all my infrastructure these

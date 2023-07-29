@@ -1,5 +1,5 @@
-.idea/
-.hugo_build.lock
+/.idea/
+/node_modules/
+/dist/
+/.plugin-clean
 *.iml
-public/
-resources/

@@ -5,7 +5,7 @@ eleventyExcludeFromCollections: true
 ---
 
 <ul>
-  {% for page in collections.posts %}
+  {%- for page in collections.posts %}
     <li><a href="{{ page.url }}">{{ page.data.title }}</a></li>
-  {% endfor %}
+  {%- endfor %}
 </ul>

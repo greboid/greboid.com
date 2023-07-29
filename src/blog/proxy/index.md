@@ -34,7 +34,7 @@ common ones, the results were not exactly as expected.
 | Thread Req/sec | 50.95   | 12.40  | 180.00   | 82.14%    |
 | Total Req/sec  | 5193.85 |        |          |           |
 
-[Config]({{ haproxy.txt | url }})
+[Config](haproxy.txt)
 &nbsp;
 ### [Centauri](https://github.com/csmith/centauri)
 |                | Avg     | Stdev   | Max     | +/- Stdev |

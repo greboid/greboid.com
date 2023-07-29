@@ -24,8 +24,8 @@ as this is now trivial to do.  I'm not 100% convinced by the theme so far, but i
 made during this was the change in the dark background, with the light theme there was enough contrast between the 
 background and the foreground, but on the dark theme this just seemed off, so I made a change to my background as below:
 
-[old-background thumbnail]()
-[new-background thumbnail]()
+![Basic Outline](./old-background.png)
+![Basic Outline](./new-background.png)
 
 Not a major change, but I think it made the site much more readable, I also removed all the animation from the front, it
 was a nice novelty but that did wear off quite quickly and served no real benefit.  I'm still not totally happy with this

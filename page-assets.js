@@ -1,6 +1,5 @@
 const path = require('path')
 const fs = require('fs')
-const {JSDOM} = require('jsdom')
 const crypto = require('crypto')
 
 let pluginOptions = {

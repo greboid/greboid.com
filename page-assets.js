@@ -3,6 +3,7 @@ const fs = require('fs')
 const crypto = require('crypto')
 
 let pluginOptions = {
+  hash: true,
 }
 
 async function moveAsset(inputPath, outputPath, assetName) {
@@ -11,9 +12,14 @@ async function moveAsset(inputPath, outputPath, assetName) {
   if (inputFile.ext === "" ) {
     throw new Error("Cannot have a blank link to an asset or image")
   }
-  const fileContents = fs.readFileSync(path.join(inputFile.dir, inputFile.base))
-  const hash = crypto.createHash('sha1').update(fileContents).digest('hex')
-  const outputName = `${inputFile.name}-${hash}${inputFile.ext}`
+  let outputName
+  if (pluginOptions.hash) {
+    const fileContents = fs.readFileSync(path.join(inputFile.dir, inputFile.base))
+    const hash = crypto.createHash('sha1').update(fileContents).digest('hex')
+    outputName = `${inputFile.name}-${hash}${inputFile.ext}`
+  } else {
+    outputName = `${inputFile.name}${inputFile.ext}`
+  }
   fs.mkdirSync(outputDir, {recursive: true})
   await fs.promises.copyFile(path.join(inputFile.dir, inputFile.base), path.join(outputDir, outputName))
   return outputName

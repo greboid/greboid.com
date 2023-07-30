@@ -13,7 +13,7 @@ $text-dark: #C1C7C9;
   --foreground-colour: #{$color-black};
   --background-colour-trans: #{$color-white-trans};
   --foreground-colour-trans: #{$color-black-trans};
-  --background-image: url("/images/light-background.jpg");
+  --background-image: image-set("/images/light-background.avif" type("image/avif"), "/images/light-background.webp" type("image/webp"), "/images/light-background.jpg" type("image/jpeg"));
   --overlay: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5), transparent);
   --text-shadow: 5px 5px 5px var(--background-colour);
   --text-colour: #{$text-light};
@@ -27,7 +27,7 @@ $text-dark: #C1C7C9;
     --foreground-colour: #{$color-white};
     --background-colour-trans: #{$color-black-trans};
     --foreground-colour-trans: #{$color-white-trans};
-    --background-image: url("/images/dark-background.jpg");
+    --background-image: image-set("/images/dark-background.avif" type("image/avif"), "/images/dark-background.webp" type("image/webp"), "/images/dark-background.jpg" type("image/jpeg"));
     --overlay: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.5), transparent);
     --text-shadow: 0.05em 0.05em 0.05em var(--background-colour);
     --text-colour: #{$text-dark};
@@ -57,7 +57,8 @@ body:after{
   left:0;
   right:0;
   z-index: -2;
-  background: var(--background-image) center center;
+  background-image: var(--background-image);
+  background-position: top right;
   background-size: cover;
 }
 

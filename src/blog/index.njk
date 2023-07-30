@@ -8,20 +8,15 @@ pagination:
   alias: posts
   reverse: true
 ---
-<div id="wrapper">
-  <main>
-    <div id="content">
-      {%- for page in posts %}
-      <article>
-        <h2><a href="{{ page.url }}">{{ page.data.title }}</a></h2>
-        {{ page.data.page.excerpt | markdown | safe }}
-        {%  if not loop.last %}
+  {%- for page in posts %}
+    <article>
+      <h2><a href="{{ page.url }}">{{ page.data.title }}</a></h2>
+      <p>{{ page.data.date | niceDate }}</p>
+      {{ page.data.page.excerpt | markdown | safe }}
+      {%  if not loop.last %}
         <hr>
-        {% endif %}
-      </article>
-      {% else %}
-      <p>No posts available</p>
-      {%- endfor %}
-    </div>
-  </main>
-</div>
+      {% endif %}
+    </article>
+  {% else %}
+    <p>No posts available</p>
+  {%- endfor %}

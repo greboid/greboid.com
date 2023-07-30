@@ -8,7 +8,15 @@
   {% block additionalhead %}{% endblock %}
 </head>
 <body>
-<nav><ul><li><a href="/">Home</a></li><li><a href="/blog">Blog</a></li></ul></nav>
+<nav>
+  <span></span>
+  {% block titlehead %}{% endblock %}
+  <ul>
+    {%- for section in site.mainSections %}
+    <li><a href="{{ section.link }}">{{ section.title }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>
 {%- block content -%}{%- endblock -%}
 </body>
 </html>

@@ -1,9 +1,6 @@
 ---
-title: "New Site"
-date: "2022-02-13T12:08:54Z"
-resources:
- - name: "old-background"
- - name: "new-background"
+title: New Site
+date: 2022-02-13T12:08:54Z
 ---
 As I was redoing my CV it was repeatedly suggested that I blog about it, I really dislike the idea of blogging as I'm
 not convinced I'm capable of writing posts that don't drone off missing the interesting aspects, but my friends were

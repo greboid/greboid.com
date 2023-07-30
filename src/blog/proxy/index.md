@@ -1,14 +1,6 @@
 ---
-title: "Web Proxy"
+title: Web Proxy
 date: 2022-03-23T19:55:02Z
-resources:
-- name: "apache.txt"
-- name: "caddy.txt"
-- name: "centauri.txt"
-- name: "haproxy.txt"
-- name: "nginx.txt"
-- name: "traefik-static.txt"
-- name: "traefik-dynamic.txt"
 ---
 The majority of container setups need a reverse proxy to redirect incoming requests to the appropriate container. Some 
 time ago I went with a template generator written by my friend, [Dotege](https://github.com/csmith/dotege), this avoids

@@ -2,6 +2,15 @@
 {%- block additionalhead -%}
   <link rel="alternate" type="application/rss+xml" href="https://greboid.com/blog/index.xml" title="{{ site.title }}" />
 {%- endblock -%}
+{% block titlehead %}<h1>{{ title }}</h1>{% endblock %}
 {%- block content -%}
-  {{ content | safe }}
+  <div id="wrapper">
+    <main>
+      <div id="content">
+        <article>
+          {{ content | safe }}
+        </article>
+      </div>
+    </main>
+  </div>
 {%-  endblock -%}

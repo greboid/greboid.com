@@ -13,6 +13,9 @@ pagination:
       <h2><a href="{{ page.url }}">{{ page.data.title }}</a></h2>
       <p>{{ page.data.date | niceDate }}</p>
       {{ page.data.page.excerpt | markdown | safe }}
+      <p>
+        <a href="{{ page.url }}">Continue reading…</a>
+      </p>
       {%  if not loop.last %}
         <hr>
       {% endif %}

@@ -1,11 +1,19 @@
 const pluginRss = require('@11ty/eleventy-plugin-rss')
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight')
 const pageAssets = require('./page-assets')
+const pluginRev = require("eleventy-plugin-rev")
+const pluginSass = require("eleventy-sass")
 
 module.exports = function(config) {
   config.addPlugin(syntaxHighlight)
   config.addPlugin(pluginRss)
+  config.addPlugin(pluginRev)
+  config.addPlugin(pluginSass, { rev: true })
   config.addPlugin(pageAssets)
+  config.addPassthroughCopy({
+    "./src/images/": "/images/"
+  })
+  config.addWatchTarget("./src/images/*")
   return {
     markdownTemplateEngine: 'njk',
     htmlTemplateEngine: 'njk',

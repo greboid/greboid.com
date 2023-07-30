@@ -15,6 +15,8 @@ time ago I went with a template generator written by my friend, [Dotege](https:/
 having to expose the docker socket to the web and makes the choice of proxy reasonable flexible, but by default it ships
 with a template for Haproxy - as a very established proxy, I went with this and this served me quite well for some time.
 
+<!--more-->
+
 I have more recently experienced some annoying bugs with haproxy, one of which prevented any containers being pushed 
 to my registry and a more recent one caused an intermittent issue with my site not rendering a background due to a 
 permissions-policy header causing an internal server error.  In light of this I took the opportunity to take a look at 

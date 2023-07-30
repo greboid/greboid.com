@@ -2,10 +2,26 @@
 title: All posts
 permalink: /blog/
 eleventyExcludeFromCollections: true
+pagination:
+  data: collections.posts
+  size: 5
+  alias: posts
+  reverse: true
 ---
-
-<ul>
-  {%- for page in collections.posts %}
-    <li><a href="{{ page.url }}">{{ page.data.title }}</a></li>
-  {%- endfor %}
-</ul>
+<div id="wrapper">
+  <main>
+    <div id="content">
+      {%- for page in posts %}
+      <article>
+        <h2><a href="{{ page.url }}">{{ page.data.title }}</a></h2>
+        {{ page.data.page.excerpt | markdown | safe }}
+        {%  if not loop.last %}
+        <hr>
+        {% endif %}
+      </article>
+      {% else %}
+      <p>No posts available</p>
+      {%- endfor %}
+    </div>
+  </main>
+</div>

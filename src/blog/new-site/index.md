@@ -12,6 +12,8 @@ quite insistent.
 Only time will tell if I keep writing posts, but irrespective, the new site gives me the flexibility to make changes and
 add things to the site with substantially less hassle than the old site.
 
+<!--more-->
+
 My old site was a single page site, served by a custom go binary because I got frustrated with nginx, whilst I could
 have fairly easily adjusted the code to serve a blog and handwritten each post, this felt like too much reinventing the
 wheel even for me. A static site generator would give me the flexibility to keep the site lightweight, theming would be

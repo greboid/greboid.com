@@ -21,6 +21,8 @@ harder it was to make Awesome-CV do what I wanted. Everytime I made some minor c
 would crop up, the LaTeX class for this is fairly complicated and quite hard to jump in and edit as you need to, it's
 mostly designed to be completely adjusted with variables in the document, so decided I should look at alternatives.
 
+<!--more-->
+
 After looking around at a number of other templates I decided the best way forward, armed with my additional LaTeX
 knowledge, would be to create my own from scratch, I had picked up at least the basics of LaTeX from all the tweaks I'd
 made and had some time to do some reading on the subject. I started a [new repository](https://github.com/greboid/cv)

@@ -15,6 +15,16 @@ const configFunction = (config, _) => {
     outputTag += '</picture>\n'
     return outputTag
   })
+  config.addAsyncShortcode('thumbnail', async function(assetName, width) {
+    let outputTag = '<picture>\n'
+    findOtherImages(this.page.inputPath, this.page.outputPath, assetName).forEach((value, key) => {
+      outputTag += `<source srcset="${this.page.url}${value}" type="image/${key}">\n`
+    })
+    let name = moveAsset(this.page.inputPath, this.page.outputPath, assetName)
+    outputTag += `<img src="${this.page.url}${name}" alt="" loading="lazy" width="${width}">`
+    outputTag += '</picture>\n'
+    return outputTag
+  })
 }
 
 module.exports = configFunction

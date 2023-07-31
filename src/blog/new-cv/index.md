@@ -24,7 +24,7 @@ and got to work. LaTeX is definitely not user-friendly and documentation for it,
 I was, however, quite surprised with how quickly I made progress, it only took about an hour to get the basics of a CV
 up and running.
 
-{% image './basic-outline.jpg' %}
+{% thumbnail './basic-outline.jpg', 200 %}
 
 Obviously this needs a huge amount of work to make it into a CV, and a lot of this is fighting with latex defaults,
 whitespace and fonts and margins to get something less ugly.  Unfortunately I didn't make any git commits doing this, so
@@ -54,7 +54,7 @@ The response was an exceptionally sarcastic "have you tried removing that \\\\",
 the newline and this not working how I wanted, but I removed the now glaringly obvious new line and my whitespace issue
 was solved 🤦.
 
-{% image './finished-cv.jpg' %}
+{% thumbnail './finished-cv.jpg', 200 %}
 
 I now have a CV that is nice and simple to update and make changes to, It builds as a PDF, so I can both print this
 easily and provide electronically as required, so meets all my initial requirements. As with all my infrastructure these

@@ -1,4 +1,5 @@
 FROM reg.g5d.dev/node as build
+RUN apk add python3 make g++
 
 WORKDIR /src
 COPY package.json package-lock.json /src/

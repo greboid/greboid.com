@@ -1,30 +1,7 @@
-const Image = require('@11ty/eleventy-img')
-const path = require('path')
+import path from 'path'
+import Image from '@11ty/eleventy-img'
 
-const picture = async(url, outputFile, inputFile, assetName, width, alt = "") => {
-  if (alt === "") {
-    return Promise.reject("alt must not be blank")
-  }
-  inputFile = path.parse(inputFile)
-  inputFile = path.parse(path.join(inputFile.dir, assetName))
-  outputFile = path.parse(outputFile)
-  const types = ['avif', 'webp', 'jpeg']
-  const images = await Image(path.join(inputFile.dir, inputFile.base), {
-    widths: [width, 'auto'],
-    formats: types,
-    outputDir: outputFile.dir,
-    urlPath: url,
-  })
-  const imageAttributes = {
-    alt: "",
-    sizes: "100vw",
-    loading: "lazy",
-    decoding: "async",
-  }
-  return Image.generateHTML(images, imageAttributes);
-}
-
-const thumbnail = async (url, outputFile, inputFile, assetName, width, alt = "") => {
+export const createThumbnail = async (url, outputFile, inputFile, assetName, width, alt = "") => {
   if (alt === "") {
     return Promise.reject("alt must not be blank")
   }
@@ -52,5 +29,3 @@ const thumbnail = async (url, outputFile, inputFile, assetName, width, alt = "")
   output += "</picture>"
   return output
 }
-
-module.exports = { thumbnail, picture }

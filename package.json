@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
     "build": "npx @11ty/eleventy",
     "start": "npx @11ty/eleventy --serve"
@@ -12,12 +13,13 @@
   "license": "MIT",
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-img": "^3.1.0",
     "@11ty/eleventy-plugin-rss": "^1.2.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
-    "@11ty/eleventy-img": "^3.1.0",
     "eleventy-plugin-rev": "^1.1.1",
     "eleventy-sass": "^2.2.3",
     "luxon": "^3.3.0",
-    "markdown-it": "^13.0.1"
+    "markdown-it": "^13.0.1",
+    "require-esm-in-cjs": "^0.1.0"
   }
 }

@@ -11,7 +11,7 @@ pagination:
   {%- for page in posts %}
     <article>
       <h2><a href="{{ page.url }}">{{ page.data.title }}</a></h2>
-      <p>{{ page.data.date | niceDate }}</p>
+      <p>{{ page.data.date | nicedate }}</p>
       {{ page.data.page.excerpt | markdown | safe }}
       <p>
         <a href="{{ page.url }}">Continue reading…</a>

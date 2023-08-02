@@ -2,8 +2,8 @@
 
 $color-black: rgb(0,0,0);
 $color-white: rgb(255,255,255);
-$color-white-trans: rgba($color-white, .9);
-$color-black-trans: rgba($color-black, .9);
+$color-white-trans: rgba($color-white, 1);
+$color-black-trans: rgba($color-black, 1);
 $text-light: #131516;
 $text-dark: #C1C7C9;
 
@@ -153,13 +153,14 @@ header.tall {
 main {
   background: var(--background-colour-trans);
   background-clip: content-box;
-  border-radius: 0.5em;
-  padding: 2em 15vw 2em;
+  border-radius: 1em;
+  padding: 0 15vw ;
   width: 100%;
   height: 100%;
 }
 
 #content {
+  height: 100%;
   padding: 2em;
   color: var(--text-colour);
   font-size: 1.2em;
@@ -168,6 +169,11 @@ main {
     color: var(--text-colour);
   }
 
+  h1 {
+    text-align: center;
+    color: var(--foreground-colour);
+    padding-bottom: 0.5em;
+  }
   h2 a {
     color: var(--foreground-colour);
   }

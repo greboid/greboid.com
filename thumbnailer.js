@@ -43,7 +43,7 @@ const thumbnail = async (url, outputFile, inputFile, assetName, width, alt = "")
     if (images[type]) {
       if (type !== "jpg") {
         images[type].forEach(image => {
-          output += `<source type="${image.sourceType}" decoding="async" src="${image.url}" width="${image.width}" height="${image.height}">`
+          output += `<source type="${image.sourceType}" decoding="async" srcset="${image.url}" width="${image.width}" height="${image.height}">`
         })
       }
     }

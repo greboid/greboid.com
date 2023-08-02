@@ -1,25 +1,15 @@
 ---
-title: Web Proxy
+title: Looking for a new reverse proxy
 date: 2022-03-23T19:55:02Z
 ---
-The majority of container setups need a reverse proxy to redirect incoming requests to the appropriate container. Some 
-time ago I went with a template generator written by my friend, [Dotege](https://github.com/csmith/dotege), this avoids
-having to expose the docker socket to the web and makes the choice of proxy reasonable flexible, but by default it ships
-with a template for Haproxy - as a very established proxy, I went with this and this served me quite well for some time.
+The majority of container setups need a reverse proxy to redirect incoming requests to the appropriate container. I use [Dotege](https://github.com/csmith/dotege), a template generator that listens to container events and creates a config, this gives me the flexibility to switch proxies easily and try new things.
+
+I was using Haproxy, but hit some irritating issues after a few releases and had to keep patching it to continue working.  One bug prevented me from pushing containers to my registry, and another caused issues with my site's background rendering. Both changes were caused some major changes to how they handled one thing or another, but there are no tests to make sure it works correctly.  Given this, I thought it was time to evaluate a replacement.
 
 <!--more-->
 
-I have more recently experienced some annoying bugs with haproxy, one of which prevented any containers being pushed 
-to my registry and a more recent one caused an intermittent issue with my site not rendering a background due to a 
-permissions-policy header causing an internal server error.  In light of this I took the opportunity to take a look at 
-the alternatives, and as everything is in docker and the configs can be templated as needed, I decided the best way to 
-pick a proxy would be to spin up a few instances of Dotege with different templates and see how they handled running my
-site with some simple benchmarks and pick one that was nicest to configure whilst being quite performant.
-
-The below results were a 10-second run, with 10 threads using [wrk](https://github.com/wg/wrk), whilst the configs for
-these might not be the most optimised examples, I think they're fairly optimised and definitely typical examples. 
-This should give a look at both the latency and throughput of the proxy, I picked a few big examples and them some less 
-common ones, the results were not exactly as expected.
+## Benchmarking
+To find the best proxy server, I decided to spin up a few instances of Dotege with different templates and run some benchmarks. I wanted to see how each proxy handled running my site and how easy they were to configure. I ran a 10-second test with 10 threads using [wrk](https://github.com/wg/wrk), a benchmarking tool.  Whilst performance isn't everything, it is a fairly important part of the job.  Here are the results of the benchmark tests:
 
 ### [Haproxy](https://www.haproxy.org/)
 |                | Avg     | Stdev  | Max      | +/- Stdev |
@@ -76,19 +66,10 @@ common ones, the results were not exactly as expected.
 {% link './caddy.txt', 'Config' %}
 &nbsp;
 
-Haproxy is an obvious leader here, it's a very well optimised long-established proxy, with no intentions to be anything 
-else, so seeing it come out on top was no surprise.
+## Summary
+- Haproxy: As expected, Haproxy performed well. It's a well-established and optimized proxy server.  Haproxy isn't friendly to configure and it's very easy to introduce errors when you're trying new things.
+- Apache and Nginx: Surprisingly, Nginx didn't perform as well as I expected. I spent some time optimizing it, but it still didn't match up to Apache. This made me re-evaluate my long-standing opinion that Nginx was faster than Apache.  Config of these is fairly easy, and there's a huge community and loads of examples.
+- Caddy and Traefik: These two proxies had similar performance. They are both standard and modern Go proxies with similar goals. However, Caddy offers more features for web serving.  Caddy is very nice to configure and very flexible.  Traefik isn't fun to configure, once you've got your head round things it makes sense, but it always seems to be a struggle.
+- Centauri: This came in a close second, which was a surprise after the Caddy and Traefik results, and just ahead of apache and nginx.  Configuration for this is very simple as it does one job, reverse proxy domains to another web server.
 
-Apache and nginx definitely did not come out in the order I expected, I did spend some time optimising nginx as it 
-seemed like an outlier, I did manage to increase its performance by about 50% from my initial config.  I have for a 
-long time held the opinion that nginx was a faster alternative to apache when it came to being a webserver and proxy, 
-but after seeing these I have definite re-evaluated these opinions.
-
-Caddy and Traefik seem to be about the same, which makes sense as they're both fairly standard and modern Go proxies 
-with almost the same goals - although caddy does do an awful lot more than Traefik in terms of web serving.
-
-I had initially started using Caddy, its defaults are very sensible and config file is terse yet flexible, but after
-running these benchmarks have since made a switch to Centauri (and switched my website from Caddy to Apache!).  This is
-a very new proxy server (written by [Chris Smith](https://chameth.com/) the author of Dotege), its considerably more 
-performant then the others here and still meets all my requirements and (touch wood) isn't showing any hard to 
-reproduce bugs in what should be fairly normal web traffic.
+Looking at these results, it was a fairly easy choice to go with Centauri, it was the right combination of performance and ease to configure.  It also doesn't help it's written by the author of Dotege, [Chris Smith](https://chameth.com/), so getting support for bugs should be fairly straightforward.   This has been running a few weeks now and has yet to cause me any issues, so far so good.

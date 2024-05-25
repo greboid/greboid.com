@@ -10,3 +10,8 @@ directory-listing = false
 log-remote-address = false
 redirect-tailing-slash = true
 compression-static = true
+
+[[advanced.rewrites]]
+source = "/.well-known/webfinger"
+destination = "https://webfinger.greboid.com"
+redirect = 301

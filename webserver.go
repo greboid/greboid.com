@@ -6,7 +6,6 @@ import (
 	"html/template"
 	"io/fs"
 	"log/slog"
-	"net"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -54,7 +53,7 @@ func InitWebServer(embedFS embed.FS, shm *StaticHashManager) (*WebServer, error)
 }
 
 func (ws *WebServer) ListenAndServe(port int) error {
-	return http.ListenAndServe(net.JoinHostPort("", fmt.Sprintf("%d", port)), ws.chain)
+	return http.ListenAndServe(fmt.Sprintf(":%d", port), ws.chain)
 }
 
 func (ws *WebServer) addStaticFiles() {

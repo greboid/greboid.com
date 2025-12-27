@@ -59,12 +59,14 @@ func (ws *WebServer) ListenAndServe(port int) error {
 func (ws *WebServer) addStaticFiles() {
 	ws.staticFiles["MainCSS"] = ws.staticHashMgr.GetHashedFilename("main.css")
 	ws.staticFiles["Favicon"] = ws.staticHashMgr.GetHashedFilename("favicon.svg")
+	ws.staticFiles["Dots"] = ws.staticHashMgr.GetHashedFilename("dots.svg")
 	ws.staticFiles["TransitionsJS"] = ws.staticHashMgr.GetHashedFilename("transitions.js")
 }
 
 func (ws *WebServer) addRoutes() {
 	ws.mux.HandleFunc("/favicon.ico", ws.faviconHandler)
 	ws.mux.HandleFunc("/me/", ws.meHandler)
+	ws.mux.HandleFunc("/static/"+ws.staticFiles["MainCSS"], ws.cssHandler)
 	ws.mux.HandleFunc("/static/", ws.staticHashMgr.ServeHashedFile)
 	ws.mux.HandleFunc("/", ws.rootHandler)
 }
@@ -106,6 +108,28 @@ func (ws *WebServer) serve500(w http.ResponseWriter, r *http.Request) {
 	if err := ws.renderTemplate(w, "web/pages/500.html", data, http.StatusInternalServerError); err != nil {
 		slog.Error("error rendering 500 template", "error", err)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
+}
+
+func (ws *WebServer) cssHandler(w http.ResponseWriter, r *http.Request) {
+	cssData, err := fs.ReadFile(ws.webFS, "web/static/main.css")
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	tmpl, err := template.New("css").Parse(string(cssData))
+	if err != nil {
+		slog.Error("error parsing CSS template", "error", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/css; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+
+	if err := tmpl.Execute(w, ws.staticFiles); err != nil {
+		slog.Error("error executing CSS template", "error", err)
 	}
 }
 

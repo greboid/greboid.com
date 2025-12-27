@@ -34,13 +34,13 @@ html::before {
   z-index: -1;
   background: var(--dots);
   mask-image: linear-gradient(135deg, white 0%, rgba(255, 255, 255, 0.2) 15%, rgba(255, 255, 255, 0.2) 85%, white 100%),
-  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="6" height="6" fill="white"/></svg>');
+  url('/static/{{.Dots}}');
   mask-composite: intersect;
 }
 
 html:has(article)::before {
   mask-image: linear-gradient(135deg, white 0%, rgba(255, 255, 255, 0.0) 15%, rgba(255, 255, 255, 0.0) 85%, white 100%),
-  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="6" height="6" fill="white"/></svg>');
+  url('/static/{{.Dots}}');
 }
 
 html {

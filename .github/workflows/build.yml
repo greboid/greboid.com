@@ -14,4 +14,5 @@ jobs:
       registry: 'reg.g5d.dev'
       preloginghcr: true
       preloginreg: true
+      dockerfile: Containerfile
     secrets: inherit

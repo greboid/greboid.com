@@ -1,0 +1,117 @@
+:root {
+  color-scheme: light dark;
+  --white: #faf8f5;
+  --black: #1c1b18;
+  --colour: #7c3aed;
+  --bg: light-dark(var(--white), var(--black));
+  --fg: light-dark(var(--black), var(--white));
+  --highlight: light-dark(
+      var(--colour),
+      oklch(from var(--colour) calc(l + 0.20) c h)
+  );
+  --dots: light-dark(
+      oklch(from var(--highlight) calc(l + 0.36) 0.1 h),
+      oklch(from var(--highlight) calc(l - 0.60) 0.1 h)
+  );
+  --links: light-dark(
+      oklch(from var(--highlight) calc(l - 0.15) c h),
+      oklch(from var(--highlight) calc(l + 0.15) c h)
+  );
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+*:not(dialog) {
+  margin: 0;
+}
+
+html::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--dots);
+  mask-image: linear-gradient(135deg, white 0%, rgba(255, 255, 255, 0.2) 15%, rgba(255, 255, 255, 0.2) 85%, white 100%),
+  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="6" height="6" fill="white"/></svg>');
+  mask-composite: intersect;
+}
+
+html:has(article)::before {
+  mask-image: linear-gradient(135deg, white 0%, rgba(255, 255, 255, 0.0) 15%, rgba(255, 255, 255, 0.0) 85%, white 100%),
+  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><rect width="6" height="6" fill="white"/></svg>');
+}
+
+html {
+  color: var(--fg);
+  background-color: var(--bg);
+}
+
+body {
+  line-height: 1.5;
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  padding-bottom: 1rem;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+h1 {
+  color: var(--highlight);
+}
+
+a {
+  color: var(--links);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:has(article) {
+    padding-top: 2rem;
+
+    nav {
+      a {
+        align-self: flex-start;
+      }
+
+      width: 70vw;
+    }
+
+    article {
+      justify-self: flex-start;
+      width: 70vw;
+    }
+  }
+
+  &:not(:has(article)) {
+    justify-content: center;
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        display: inline;
+
+        &:not(:first-child)::before {
+          content: " | "
+        }
+      }
+    }
+  }
+}

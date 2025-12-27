@@ -12,16 +12,6 @@ jobs:
     with:
       image: 'greboid.com'
       registry: 'reg.g5d.dev'
-      build-args: 'REVERSE=false'
-      preloginghcr: true
-      preloginreg: true
-    secrets: inherit
-  dioberg:
-    uses: greboid/.github/.github/workflows/docker.yml@master
-    with:
-      image: 'dioberg.co.uk'
-      registry: 'reg.g5d.dev'
-      build-args: 'REVERSE=true'
       preloginghcr: true
       preloginreg: true
     secrets: inherit

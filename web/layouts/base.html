@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{.Title}}</title>
+    <link rel="icon" type="image/svg+xml" href="/static/{{.StaticFiles.Favicon}}">
+    <link rel="stylesheet" type="text/css" href="/static/{{.StaticFiles.MainCSS}}">
+</head>
+<body>
+<main>
+    {{if .PreviousLink}}
+    <nav>
+        <a href="{{.PreviousLink}}" title="Go back" aria-label="Go back">← Back</a>
+    </nav>
+    {{end}}
+    {{block "content" .}}
+    {{end}}
+</main>
+</body>
+</html>

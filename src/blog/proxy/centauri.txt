@@ -1,2 +1,0 @@
-route greboid.com www.greboid.com
-    upstream greboid-greboid-1:8080

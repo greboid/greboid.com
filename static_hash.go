@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/sha256"
-	"embed"
 	"encoding/hex"
 	"fmt"
 	"io/fs"
@@ -18,13 +17,13 @@ type StaticHashManager struct {
 	files  map[string][]byte
 }
 
-func InitStaticHashManager(embedFS embed.FS, staticDir string) (*StaticHashManager, error) {
-	mgr := &StaticHashManager{
+func NewStaticHashManager(fsys fs.FS, staticDir string) (*StaticHashManager, error) {
+	shm := &StaticHashManager{
 		hashes: make(map[string]string),
 		files:  make(map[string][]byte),
 	}
 
-	err := fs.WalkDir(embedFS, staticDir, func(path string, d fs.DirEntry, err error) error {
+	err := fs.WalkDir(fsys, staticDir, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -33,7 +32,7 @@ func InitStaticHashManager(embedFS embed.FS, staticDir string) (*StaticHashManag
 			return nil
 		}
 
-		data, err := fs.ReadFile(embedFS, path)
+		data, err := fs.ReadFile(fsys, path)
 		if err != nil {
 			return fmt.Errorf("reading file %s: %w", path, err)
 		}
@@ -47,8 +46,8 @@ func InitStaticHashManager(embedFS embed.FS, staticDir string) (*StaticHashManag
 
 		hashedFilename := generateHashedFilename(relPath, hash)
 
-		mgr.hashes[relPath] = hashedFilename
-		mgr.files[hashedFilename] = data
+		shm.hashes[relPath] = hashedFilename
+		shm.files[hashedFilename] = data
 
 		slog.Debug("loaded static file", "original", relPath, "hashed", hashedFilename)
 
@@ -59,35 +58,30 @@ func InitStaticHashManager(embedFS embed.FS, staticDir string) (*StaticHashManag
 		return nil, fmt.Errorf("walking static directory: %w", err)
 	}
 
-	if len(mgr.hashes) == 0 {
+	if len(shm.hashes) == 0 {
 		slog.Warn("no static files found", "directory", staticDir)
 	}
 
-	return mgr, nil
+	return shm, nil
 }
 
-func (s *StaticHashManager) GetHashedFilename(original string) string {
-	return s.hashes[original]
+func (shm *StaticHashManager) GetHashedFilename(original string) string {
+	return shm.hashes[original]
 }
 
-func (s *StaticHashManager) ServeHashedFile(w http.ResponseWriter, r *http.Request) {
+func (shm *StaticHashManager) ServeHashedFile(w http.ResponseWriter, r *http.Request) {
 	filename := strings.TrimPrefix(r.URL.Path, "/static/")
 	if filename == "" {
 		http.NotFound(w, r)
 		return
 	}
 
-	content, exists := s.files[filename]
+	content, exists := shm.files[filename]
 	if !exists {
 		http.NotFound(w, r)
 		return
 	}
-	w.Header().Set("Content-Type", mime.TypeByExtension(filepath.Ext(filename)))
-
-	w.WriteHeader(http.StatusOK)
-	if _, err := w.Write(content); err != nil {
-		slog.Error("error writing response", "filename", filename, "error", err)
-	}
+	writeResponse(w, mime.TypeByExtension(filepath.Ext(filename)), http.StatusOK, content)
 }
 
 func computeFileHash(data []byte) string {

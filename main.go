@@ -4,6 +4,7 @@ import (
 	"embed"
 	"flag"
 	"fmt"
+	"io/fs"
 	"log/slog"
 	"os"
 
@@ -21,20 +22,25 @@ func main() {
 	slogflags.Logger(slogflags.WithSetDefault(true))
 	slog.Debug("Debug is enabled")
 
-	staticHashMgr, err := InitStaticHashManager(webFS, "web/static")
+	subFS, err := fs.Sub(webFS, "web")
+	if err != nil {
+		slog.Error("failed to create sub-filesystem", "error", err)
+		os.Exit(1)
+	}
+
+	staticHashMgr, err := NewStaticHashManager(subFS, "static")
 	if err != nil {
 		slog.Error("failed to initialize static hash manager", "error", err)
 		os.Exit(1)
 	}
-	ws, err := InitWebServer(webFS, staticHashMgr)
+	ws, err := NewWebServer(subFS, staticHashMgr)
 	if err != nil {
 		slog.Error("failed to initialize web server", "error", err)
 		os.Exit(1)
 	}
 
 	slog.Info("starting server", "address", fmt.Sprintf("http://localhost:%d", *port))
-	if err := ws.ListenAndServe(*port); err != nil {
+	if err = ws.ListenAndServe(*port); err != nil {
 		slog.Error("server error", "error", err)
-		os.Exit(1)
 	}
 }

@@ -136,3 +136,16 @@ nav[aria-label="breadcrumbs"]  {
     }
   }
 }
+
+a:not(
+	[href^="#"],
+	[href^="/"]
+)::after {
+  content: "↗";
+  vertical-align: super;
+  font-size: 0.5em;
+  display: inline-block;
+  bottom: 0.5em;
+  padding-left: 1ch;
+  position: relative;
+}

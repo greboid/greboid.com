@@ -9,10 +9,20 @@
 </head>
 <body>
 <main>
-    {{if .PreviousLink}}
-    <nav>
-        <a href="{{.PreviousLink}}" title="Go back" aria-label="Go back">← Back</a>
-    </nav>
+    {{if .Breadcrumbs}}
+        <nav aria-label="breadcrumbs">
+            <ol>
+                {{range $index, $crumb := .Breadcrumbs}}
+                    <li>
+                        {{if $crumb.IsCurrent}}
+                            <span aria-current="location">{{$crumb.Label}}</span>
+                        {{else}}
+                            <a href="{{$crumb.Path}}">{{$crumb.Label}}</a>
+                        {{end}}
+                    </li>
+                {{end}}
+            </ol>
+        </nav>
     {{end}}
     {{block "content" .}}
     {{end}}

@@ -115,3 +115,20 @@ main {
     }
   }
 }
+
+nav[aria-label="breadcrumbs"]  {
+  font-size: 0.85rem;
+  ol {
+    list-style: none;
+    padding-left: 0;
+    li {
+      display: inline-block;
+      &:not(:last-child):after {
+        content: "›";
+        display: inline-block;
+        padding: 0 .5ch;
+        speak: never;
+      }
+    }
+  }
+}

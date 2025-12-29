@@ -1,0 +1,28 @@
+{{define "content"}}
+    <article>
+        <h1>Infrastructure</h1>
+        <p>Servers are cattle not pets, containers help with that</p>
+        <p>
+            All my infrastructure runs in containers, even on my Pi at home, my servers are definitely cattle not pets.
+            The isolation from the host and other apps is great, once you've built the container it just works until you
+            make some changes. They're easy to back up and restore, everything is defined. Add docker compose files on
+            top of this to describe how each container interacts with other containers and you have yourself a fully
+            reproducible easy to manage set of infrastructure.
+        </p>
+        <p>
+            These days I almost exclusively use custom written containers too, a <a rel="noopener noreferrer"
+                                                                                    href="https://github.com/greboid/dockerfiles">little overboard</a> some might say. I did start with
+            other people's images, these all had different conventions, users, base images, some weren't kept up to
+            date, most run as root, etc. In the middle of all this annoying me, docker hub introduced their massive rate
+            limiting and project restrictions. So I decided to move to my own registry and my own images. Keeping these
+            up to date was a bit of a pain, but they were at least all small, rootless (unless required) and based on
+            the same image.
+        </p>
+        <p>
+            I have <a rel="noopener noreferrer" href="https://github.com/csmith/contempt">tooling</a> to make writing the
+            containers easier and to keep them up to date and things (for the most part) just work. I'm still not fully
+            happy with the setup and am always thinking of improvements, but until something else that gives these
+            benefits comes along I can't see it being a move away from containers.
+        </p>
+    </article>
+{{end}}

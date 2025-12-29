@@ -22,11 +22,17 @@ import (
 	"github.com/csmith/middleware"
 )
 
+type Breadcrumb struct {
+	Label     string
+	Path      string
+	IsCurrent bool
+}
+
 type TemplateData struct {
-	Title        string
-	StaticFiles  map[string]string
-	PreviousLink string
-	Template     string
+	Title       string
+	StaticFiles map[string]string
+	Breadcrumbs []Breadcrumb
+	Template    string
 }
 
 type WebServer struct {
@@ -105,10 +111,9 @@ func (ws *WebServer) addStaticFiles() {
 
 func (ws *WebServer) addRoutes() {
 	ws.mux.HandleFunc("/favicon.ico", ws.faviconHandler)
-	ws.mux.HandleFunc("/me/{name}", ws.meHandler)
 	ws.mux.HandleFunc("/static/"+ws.staticFiles["MainCSS"], ws.cssHandler)
 	ws.mux.HandleFunc("/static/", ws.staticHashMgr.ServeHashedFile)
-	ws.mux.HandleFunc("/{$}", ws.rootHandler)
+	ws.mux.HandleFunc("/", ws.pageHandler)
 }
 
 func (ws *WebServer) renderTemplateOrError(w http.ResponseWriter, _ *http.Request, templatePath string, data TemplateData, statusCode int) {
@@ -159,13 +164,13 @@ func (ws *WebServer) readFileOrNotFound(w http.ResponseWriter, r *http.Request, 
 
 func (ws *WebServer) serve404(w http.ResponseWriter, r *http.Request) {
 	slog.Debug("Page not found", "page", r.URL)
-	ws.renderTemplateOrError(w, r, "pages/404.html", TemplateData{
+	ws.renderTemplateOrError(w, r, "errors/404.html", TemplateData{
 		Title: "Page Not Found",
 	}, http.StatusNotFound)
 }
 
 func (ws *WebServer) serve500(w http.ResponseWriter, r *http.Request) {
-	ws.renderTemplateOrError(w, r, "pages/500.html", TemplateData{
+	ws.renderTemplateOrError(w, r, "errors/500.html", TemplateData{
 		Title: "Error serving page",
 	}, http.StatusInternalServerError)
 }
@@ -199,21 +204,54 @@ func (ws *WebServer) faviconHandler(w http.ResponseWriter, r *http.Request) {
 	writeResponse(w, "image/x-icon", http.StatusOK, data)
 }
 
-func (ws *WebServer) rootHandler(w http.ResponseWriter, r *http.Request) {
-	ws.renderTemplateOrError(w, r, "pages/index.html", TemplateData{
-		Title: "Greg Holmes",
-	}, http.StatusOK)
-}
-
-func (ws *WebServer) meHandler(w http.ResponseWriter, r *http.Request) {
-	templateName := r.PathValue("name")
-	if strings.HasSuffix(templateName, ".html") {
-		templateName = strings.TrimSuffix(templateName, ".html")
+func (ws *WebServer) pageHandler(w http.ResponseWriter, r *http.Request) {
+	urlPath := strings.TrimPrefix(r.URL.Path, "/")
+	if strings.HasSuffix(urlPath, ".html") {
+		urlPath = strings.TrimSuffix(urlPath, ".html")
 	}
-	templatePath := filepath.Join("pages/me", templateName+".html")
+
+	indexPath := filepath.Join("pages", urlPath, "index.html")
+	pagePath := filepath.Join("pages", urlPath+".html")
+
+	_, indexErr := fs.Stat(ws.webFS, indexPath)
+	_, pageErr := fs.Stat(ws.webFS, pagePath)
+
+	var templatePath string
+	if indexErr == nil {
+		templatePath = indexPath
+	} else if pageErr == nil {
+		templatePath = pagePath
+	} else {
+		http.NotFound(w, r)
+		return
+	}
+
+	title := "Greg Holmes"
+	var breadcrumbs []Breadcrumb
+
+	if urlPath != "" {
+		parts := strings.Split(urlPath, "/")
+		lastPart := parts[len(parts)-1]
+		title += ": " + cases.Title(language.BritishEnglish).String(lastPart)
+
+		breadcrumbs = []Breadcrumb{{Label: "Home", Path: "/", IsCurrent: false}}
+		currentPath := ""
+		for i, part := range parts {
+			if currentPath == "" {
+				currentPath = part
+			} else {
+				currentPath = currentPath + "/" + part
+			}
+			breadcrumbs = append(breadcrumbs, Breadcrumb{
+				Label:     cases.Title(language.BritishEnglish).String(part),
+				Path:      "/" + currentPath,
+				IsCurrent: i == len(parts)-1,
+			})
+		}
+	}
 
 	ws.renderTemplateOrError(w, r, templatePath, TemplateData{
-		Title:        "Greg Holmes: " + cases.Title(language.BritishEnglish).String(templateName),
-		PreviousLink: "/",
+		Title:       title,
+		Breadcrumbs: breadcrumbs,
 	}, http.StatusOK)
 }

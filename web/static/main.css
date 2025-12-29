@@ -83,6 +83,9 @@ main {
 
   &:has(article) {
     padding-top: 2rem;
+    ul {
+      padding-bottom: 1rem;
+    }
 
     nav {
       a {
@@ -118,6 +121,7 @@ main {
 
 nav[aria-label="breadcrumbs"]  {
   font-size: 0.85rem;
+  padding-bottom: 1rem;
   ol {
     list-style: none;
     padding-left: 0;

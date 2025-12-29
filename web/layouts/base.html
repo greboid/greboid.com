@@ -27,5 +27,27 @@
     {{block "content" .}}
     {{end}}
 </main>
+{{if .DevMode}}
+<script>
+  let eventSource = null
+  window.addEventListener("DOMContentLoaded", (_) => {
+    eventSource = new EventSource('/dev/reload');
+    eventSource.onmessage = (event) => {
+      if (event.data === 'reload') {
+        location.reload();
+      }
+    }
+    eventSource.onerror = () => {
+      eventSource.close()
+      setTimeout(() => location.reload(), 1000)
+    }
+  })
+  window.addEventListener("beforeunload", (_) => {
+    if (eventSource !== null) {
+      eventSource.close()
+    }
+  })
+</script>
+{{end}}
 </body>
 </html>

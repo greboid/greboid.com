@@ -33,6 +33,7 @@ type TemplateData struct {
 	StaticFiles map[string]string
 	Breadcrumbs []Breadcrumb
 	Template    string
+	DevMode     bool
 }
 
 type WebServer struct {
@@ -41,14 +42,18 @@ type WebServer struct {
 	staticFiles   map[string]string
 	mux           *http.ServeMux
 	chain         http.Handler
+	devMode       bool
+	reloadMgr     *ReloadManager
 }
 
-func NewWebServer(webFS fs.FS, shm *StaticHashManager) (*WebServer, error) {
+func NewWebServer(webFS fs.FS, shm *StaticHashManager, devMode bool, reloadMgr *ReloadManager) (*WebServer, error) {
 	ws := &WebServer{
 		webFS:         webFS,
 		staticHashMgr: shm,
 		staticFiles:   make(map[string]string),
 		mux:           http.NewServeMux(),
+		devMode:       devMode,
+		reloadMgr:     reloadMgr,
 	}
 	ws.chain = middleware.Chain(middleware.WithMiddleware(
 		middleware.StripTrailingSlashes(),
@@ -58,7 +63,9 @@ func NewWebServer(webFS fs.FS, shm *StaticHashManager) (*WebServer, error) {
 			middleware.WithErrorHandler(http.StatusInternalServerError, http.HandlerFunc(ws.serve500)),
 		),
 		middleware.RealAddress(),
-		middleware.Compress(),
+		middleware.Compress(middleware.WithCompressionCheck(func(r *http.Request) bool {
+			return r.URL.Path != "/dev/reload"
+		})),
 		middleware.Recover(middleware.WithPanicLogger(func(r *http.Request, err any) {
 			slog.Error("panic recovered", "error", err, "path", r.URL.Path, "method", r.Method)
 		})),
@@ -113,6 +120,9 @@ func (ws *WebServer) addRoutes() {
 	ws.mux.HandleFunc("/favicon.ico", ws.faviconHandler)
 	ws.mux.HandleFunc("/static/"+ws.staticFiles["MainCSS"], ws.cssHandler)
 	ws.mux.HandleFunc("/static/", ws.staticHashMgr.ServeHashedFile)
+	if ws.devMode && ws.reloadMgr != nil {
+		ws.mux.HandleFunc("/dev/reload", ws.reloadMgr.ServeSSE)
+	}
 	ws.mux.HandleFunc("/", ws.pageHandler)
 }
 
@@ -130,6 +140,7 @@ func (ws *WebServer) renderTemplateOrError(w http.ResponseWriter, _ *http.Reques
 	}
 
 	data.StaticFiles = ws.staticFiles
+	data.DevMode = ws.devMode
 
 	var buf bytes.Buffer
 	if err = tmpl.ExecuteTemplate(&buf, "base.html", data); err != nil {

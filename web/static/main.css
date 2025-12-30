@@ -1,3 +1,28 @@
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+*:not(dialog) {
+  margin: 0;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+  text-align: justify;
+  hyphens: auto;
+  hyphenate-limit-chars: 7
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Vars */
 :root {
   color-scheme: light dark;
   --white: #faf8f5;
@@ -19,12 +44,10 @@
   );
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-*:not(dialog) {
-  margin: 0;
+/* Styling */
+html {
+  color: var(--fg);
+  background-color: var(--bg);
 }
 
 html::before {
@@ -43,29 +66,11 @@ html:has(article)::before {
   url('/static/{{.Dots}}');
 }
 
-html {
-  color: var(--fg);
-  background-color: var(--bg);
-}
-
 body {
   line-height: 1.5;
   display: grid;
   width: 100vw;
   height: 100vh;
-}
-
-input, button, textarea, select {
-  font: inherit;
-}
-
-p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
-  padding-bottom: 1rem;
-}
-
-p {
-  text-wrap: pretty;
 }
 
 h1 {
@@ -81,8 +86,13 @@ main {
   flex-direction: column;
   align-items: center;
 
+  p {
+    padding-bottom: 1rem;
+  }
+
   &:has(article) {
     padding-top: 2rem;
+
     ul {
       padding-bottom: 1rem;
     }
@@ -98,6 +108,7 @@ main {
     article {
       justify-self: flex-start;
       width: 70vw;
+      padding-bottom: 2rem;
     }
   }
 
@@ -119,14 +130,17 @@ main {
   }
 }
 
-nav[aria-label="breadcrumbs"]  {
+nav[aria-label="breadcrumbs"] {
   font-size: 0.85rem;
   padding-bottom: 1rem;
+
   ol {
     list-style: none;
     padding-left: 0;
+
     li {
       display: inline-block;
+
       &:not(:last-child):after {
         content: "›";
         display: inline-block;
@@ -148,4 +162,11 @@ a:not(
   bottom: 0.5em;
   padding-left: 1ch;
   position: relative;
+}
+
+pre {
+  font: inherit;
+  white-space: pre-line;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
 }

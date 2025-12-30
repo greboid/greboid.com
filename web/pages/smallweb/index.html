@@ -1,22 +1,113 @@
-{{define "content"}}
-<article>
-    <h1>Small Web</h1>
-    <p>I'm not a fan of the centralisation of the internet.</p>
-    <p>
-        The early web was diverse, personal and sometimes downright weird. People made things for themselves and
-        each other, not for metrics or money. Now we have a handful of platforms who own most of what we see and do
-        online. Everything looks the same, feels the same, it's all optimised and (mostly) sanitised.
-    </p>
-    <p>
-        Centralisation isn't just boring, it can be brutal, you disagree with the consensus and all your
-        content could disappear, along with the connections, history, friends, etc. If a platform dies or changes,
-        you
-        lose everything and there's no recourse. Everything is rented, not owned.
-    </p>
-    <p>
-        The small web is people owning their little corners of the internet again. Personal sites, RSS, simple,
-        small communities. It's not (just) about nostalgia, it's about remembering the internet used to
-        have different goals, people goals, and we don't have to accept the direction we're told to go.
-    </p>
-</article>
-{{end}}
+{{- define "content"}}
+    <article>
+        <h1>Small Web</h1>
+        <p>
+            The early web was diverse, personal and sometimes downright weird. If you wanted a website, you made it, and
+            because of that, it reflected you. Because it wasn't just a couple of clicks, you had to think about it,
+            take some time on it, put some effort in; it wasn't spur of the moment. There were visitor counters,
+            guestbooks and webrings, if you wanted to find a site you were interested in you had to find directories or
+            discover it via other similar websites that linked to it. There was no central index.
+        </p>
+        <p>
+            As popularity grew, we started getting search engines that crawled all the sites for you and ranked them by
+            popularity based on their own black box ranking systems. This was still a good trade-off, whilst it was
+            still a central system that could be gamed, for the most part what you wanted was easy to find and the
+            centralised index didn't control the content, it just helped it to be found. Obviously, determining which
+            websites were "best" was now a decision being made by a company, and as a company they needed to make
+            money.  Even back then this was advertising, but the ads were usually unobtrusive and based on what you
+            searched for and nothing else. The other side effect of this was that sites started being designed around
+            getting to the top result and content wasn't the number one priority any more for a lot of sites.
+        </p>
+        <p>
+            As the internet developed it became more interactive, easier to get content onto. The first stage in this
+            were blogs, WordPress, Blogger, LiveJournal, and others. The barrier for having your presence on the
+            internet was lower, it was a lot easier to just throw your thoughts on the internet without too much effort.
+            It was, however, still your space, your words, and (mostly) your rules. Each site had a feeling it belonged to
+            someone, and you could see their personality shining through. It was the start of centralisation;
+            you'd started losing some control over whether your site stayed up or not. There were T&Cs and AUPs you had
+            to agree to for your content and unless you paid, adverts were starting to be shown on your site. Profiles
+            where you shared your interests in a nice easy to collate place, friend lists and subscribers.
+        </p>
+        <p>
+            Companies started to realise there was a lot of information available, and people were very happy to give
+            more. Once you have more data you can do more with it, and so the platforms started to appear: Facebook,
+            Twitter, and others. These platforms all had nice profiles where you added interests; it was very easy to
+            not only share your thoughts, but also repost others' thoughts, click like, reply. With all the data they
+            had available, recommendations about what you should be viewing became very easy to generate. "For you"
+            sections appeared, powered by algorithms deciding what to show you.
+        </p>
+        <p>
+            Time-based timelines eventually gave way to engagement-based timelines. As this trend continued, everyone
+            you knew was already on one of these platforms, so the barrier for entry got lower and there was an unspoken
+            pressure to join. As the numbers grew, so did their influence—and with that growth came the constant push
+            for quick-win, lowest-common-denominator engagement.
+        </p>
+        <p>
+            Now the platforms had lots of users, and you were logged in anyway, so why not just use your platform's
+            identity as an identity provider for other sites? It saves remembering another set of account details and
+            reduces the friction. Your identity now wasn't just owned by the platform when you were on their platform,
+            but also when you were on other places too. Everything is being centralised on a few small companies. The
+            majority of a lot of people's interaction with the internet is now done entirely through these few
+            companies. As the internet centralised on these few companies, not only did they try to exert more control
+            over their users, their walled gardens expanded as they bought more and more of the other little companies
+            trying to eke out a living.
+        </p>
+        <p>
+            This centralisation leads to so many downsides for everyday choices and freedoms. With such large amounts of
+            control, they abuse market forces to offer things cheaper than smaller companies, often doing so just long
+            enough to starve the competition before hiking prices. With everything being reliant on a few small
+            companies, resilience goes down.
+        </p>
+        <p>
+            The consequences of this concentration became starkly visible in 2021, when a faulty configuration change
+            took Facebook, Instagram, WhatsApp and Messenger offline globally for six hours; the outage also prevented
+            anyone using 'Log in with Facebook' from accessing third-party sites. In 2024, a faulty update from security
+            vendor CrowdStrike caused millions of Windows systems to crash, grounding flights at United, Delta and
+            American Airlines, pulling Sky News off-air, and disrupting banks and healthcare providers worldwide. We've
+            seen similar disruptions from AWS, Cloudflare and Google outages. When so few companies underpin so much,
+            a single mistake ripples everywhere.
+        </p>
+        <p>
+            If you disagree with the masses, or break the "rules", your account is disabled. You no longer have access to
+            everything that you relied on, no emails, no social media, no friends, no history. Usually there is no
+            recourse. Should payment processors be the moral guardians of the world refusing to process payments for
+            industries they disagree with? If a particular service you like isn't getting the right engagement, or isn't
+            profitable enough, it can be cancelled, all your data gone. Censorship is very easy to achieve when
+            everything goes through a few places. Surveillance becomes very easy when everything goes through a few
+            places. A slow siege and slow change, under the guise of being better, new, improved and with all the
+            competition gone, things are shifting to suit the needs of the companies, not the people. Everything is
+            rented, not owned.
+        </p>
+        <p>
+            There is, however, a revival of the founding principles of the web. People have started to see the pitfalls
+            of this centralisation and are starting to reject the big platforms, moving back to something more
+            resembling the early web. Call it the small web, the indie movement, the personal web, or whatever you feel
+            suits - the intention is the same: a move back toward something owned and controlled by individuals.
+        </p>
+        <p>
+            In practice, this means people registering their own domains, setting up blogs, making their own websites.
+            Joining communities of like-minded people, using RSS. The tools to do this have evolved significantly from
+            the early web, static site generators, lightweight hosting, CSS and HTML have also evolved hugely making it
+            much easier for things to look how you want with much less faff.
+        </p>
+        <p>
+            Motivations for it aren't all the same: longevity, knowing your site can last as long as you want; privacy,
+            knowing your data isn't being harvested, and you're not harvesting that of others. Many are simply exhausted
+            with doom-scrolling endless algorithmically recommended content. The underlying belief behind all
+            of these motivations is approximately the same, the web doesn't have to be what it has become.
+        </p>
+        <p>
+            Personal sites matter. Basic HTML sites from the early internet still render absolutely fine today. They
+            don't always look as polished as a modern website and their style is questionable, but they still work,
+            easily outliving any of the big platforms. With no algorithm to reward your content, which is often outrage,
+            controversy, relentless positivity or perfection, with no metrics to be aiming at, your content is just what
+            matters, whether that's to thousands, dozens or just yourself. Diversity of form and content, you're no
+            longer restrained to the same layout as every other Twitter user, no longer constrained to the Instagram
+            grid; minimal, maximal, you decide.
+        </p>
+        <p>
+            The internet is still, at its core, made of links. These links can lead anywhere, including back to a more
+            personal, decentralised web.
+        </p>
+    </article>
+{{- end}}

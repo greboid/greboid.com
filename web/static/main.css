@@ -169,3 +169,18 @@ pre {
   text-wrap: pretty;
   overflow-wrap: break-word;
 }
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  body {
+    font-size: 1.1rem;
+  }
+  main:has(article) {
+    padding-top: 3rem;
+
+    nav, article {
+      width: 90vw;
+      max-width: 70ch;
+    }
+  }
+}

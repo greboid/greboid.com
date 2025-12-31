@@ -28,10 +28,16 @@ type Breadcrumb struct {
 	IsCurrent bool
 }
 
+type Subpage struct {
+	Label string
+	Path  string
+}
+
 type TemplateData struct {
 	Title       string
 	StaticFiles map[string]string
 	Breadcrumbs []Breadcrumb
+	Subpages    []Subpage
 	Template    string
 	DevMode     bool
 }
@@ -239,6 +245,7 @@ func (ws *WebServer) pageHandler(w http.ResponseWriter, r *http.Request) {
 
 	title := "Greg Holmes"
 	var breadcrumbs []Breadcrumb
+	var subpages []Subpage
 
 	if urlPath != "" {
 		parts := strings.Split(urlPath, "/")
@@ -261,8 +268,25 @@ func (ws *WebServer) pageHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if templatePath == indexPath {
+		pagesDir := filepath.Join("pages", urlPath)
+		entries, err := fs.ReadDir(ws.webFS, pagesDir)
+		if err == nil {
+			for _, entry := range entries {
+				if !entry.IsDir() && entry.Name() != "index.html" && strings.HasSuffix(entry.Name(), ".html") {
+					pageName := strings.TrimSuffix(entry.Name(), ".html")
+					subpages = append(subpages, Subpage{
+						Label: cases.Title(language.BritishEnglish).String(pageName),
+						Path:  "/" + filepath.Join(urlPath, pageName),
+					})
+				}
+			}
+		}
+	}
+
 	ws.renderTemplateOrError(w, r, templatePath, TemplateData{
 		Title:       title,
 		Breadcrumbs: breadcrumbs,
+		Subpages:    subpages,
 	}, http.StatusOK)
 }

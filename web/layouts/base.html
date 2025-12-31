@@ -24,6 +24,15 @@
         </ol>
     </nav>
     {{- end}}
+    {{- if .Subpages }}
+    <nav aria-label="subpages">
+        <ul>
+            {{- range $subpage := .Subpages}}
+            <li><a href="{{$subpage.Path}}">{{$subpage.Label}}</a></li>
+            {{- end}}
+        </ul>
+    </nav>
+    {{- end}}
     {{- block "content" . -}}
     {{- end}}
 </main>

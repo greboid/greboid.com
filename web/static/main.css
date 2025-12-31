@@ -150,6 +150,38 @@ nav[aria-label="breadcrumbs"] {
   }
 }
 
+main:has(nav[aria-label="subpages"]) nav[aria-label="breadcrumbs"] {
+  padding-bottom: 0;
+}
+
+nav[aria-label="subpages"] {
+  font-size: 0.85rem;
+  padding-bottom: 1rem;
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+
+    &::before {
+      content: "→";
+      padding-right: .5ch;
+      speak: never;
+    }
+
+    li {
+      display: inline-block;
+      padding-right: 0;
+
+      &:not(:first-child):before {
+        content: "·";
+        display: inline-block;
+        padding: 0 .5ch;
+        speak: never;
+      }
+    }
+  }
+}
+
 a:not(
 	[href^="#"],
 	[href^="/"]
